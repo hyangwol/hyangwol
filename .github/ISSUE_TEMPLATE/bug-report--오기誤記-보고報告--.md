@@ -2,7 +2,7 @@
 name: Bug report (오기誤記 보고報告.)
 about: Create a report to help us improve. 오기誤記 있으면 알려주세요.
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
