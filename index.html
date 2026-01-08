@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* CSS: 평소에는 숨겼다가 마우스를 올리면 클립(clip) 아이콘이 보이게 함 */
+        .header-link {
+            opacity: 0;
+            text-decoration: none;
+            margin-left: 10px;
+            transition: opacity 0.2s;
+        }
+        h1:hover .header-link {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="hi-there">
+        Hi there
+        <a class="header-link" href="#hi-there">🔗</a>
+    </h1>
+
+    <script>
+        /* JavaScript: 클립을 누르면 주소창이 바뀌고 해당 위치로 스크롤함 */
+        document.querySelector('.header-link').addEventListener('click', function(e) {
+            console.log("앵커 링크가 작동되었습니다.");
+        });
+    </script>
+
+</body>
+</html>
