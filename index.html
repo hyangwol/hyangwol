@@ -2,29 +2,49 @@
 <html>
 <head>
     <style>
+        /* 기본 글꼴 및 전체적인 스타일 설정 */
+        body { font-family: -apple-system, sans-serif; padding: 50px; }
+        
+        /* 제목 태그의 위치를 상대적으로 설정하여 아이콘 배치의 기준을 잡음 */
+        h1 { position: relative; display: inline-block; cursor: default; }
+
         /* CSS: 평소에는 숨겼다가 마우스를 올리면 클립(clip) 아이콘이 보이게 함 */
-        .header-link {
-            opacity: 0;
+        .anchor-link {
+            display: inline-block;
+            margin-left: 8px;
+            color: #afbac4; /* 은은한 회색으로 세련미 부여 */
             text-decoration: none;
-            margin-left: 10px;
-            transition: opacity 0.2s;
+            font-size: 0.7em;
+            opacity: 0; /* 평소에는 투명하게 숨김 */
+            transition: opacity 0.2s ease, color 0.2s; /* 부드러운 나타남 효과 */
         }
-        h1:hover .header-link {
-            opacity: 1;
-        }
+
+        /* 마우스를 제목(h1) 위에 올렸을 때(hover) 아이콘을 보이게 함 */
+        h1:hover .anchor-link { opacity: 1; }
+        
+        /* 아이콘 자체에 마우스를 올리면 깃허브 공식 파란색으로 변경 */
+        .anchor-link:hover { color: #0969da; }
+
+        /* SVG 아이콘의 크기와 정렬 상태 설정 */
+        .icon { width: 16px; height: 16px; fill: currentColor; vertical-align: middle; }
     </style>
 </head>
 <body>
 
     <h1 id="hi-there">
         Hi there
-        <a class="header-link" href="#hi-there">🔗</a>
+        <a class="anchor-link" href="#hi-there" aria-label="Permalink">
+            <svg class="icon" viewBox="0 0 16 16" version="1.1">
+                <path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path>
+            </svg>
+        </a>
     </h1>
 
     <script>
         /* JavaScript: 클립을 누르면 주소창이 바뀌고 해당 위치로 스크롤함 */
-        document.querySelector('.header-link').addEventListener('click', function(e) {
-            console.log("앵커 링크가 작동되었습니다.");
+        /* (현재는 단순 앵커 링크로 작동하며, 추후 복잡한 스크롤 제어 시 확장 가능) */
+        document.querySelector('.anchor-link').addEventListener('click', function(e) {
+            console.log("앵커 링크가 정상 동작하여 URL이 변경되었습니다.");
         });
     </script>
 
