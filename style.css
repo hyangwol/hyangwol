@@ -1,17 +1,22 @@
 /* style.css: 디자인과 스타일을 담당하는 독립된 문서 */
 header {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eaecef; /* 은은한 구분선 추가 */
 }
 
 #brand-link {
     text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1em;
+    font-weight: 700;        /* 조금 더 두껍게 */
+    font-size: 1.25em;       /* 크기 확대 */
     color: #24292f;
+    letter-spacing: -0.02em; /* 자간 조절로 세련미 추가 */
+    transition: color 0.2s;  /* 색상 변화 부드럽게 */
 }
 
 #brand-link:hover {
     color: #0969da;
+    text-decoration: underline; /* 마우스 올리면 밑줄 표시 */
 }
 
 body { 
