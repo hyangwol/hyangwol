@@ -1,17 +1,94 @@
 /* style.css: 디자인과 스타일을 담당하는 독립된 문서 */
 
-/* 2. [교체] header 설정: 기존 margin-bottom을 제거하고 고정 높이와 flexbox 부여 */
+
+
+
+
+
+
+
+
+
+
+
+/* [교체] 2단 가변 헤더의 물리적 배치 및 구조 */
 header {
-    height: 80px; /* 브랜드 글꼴 크기에 맞춘 높이 조절 */
-    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-bottom: 1px solid #eaecef;
+    transition: all 0.3s ease; /* 슬림 모드 전환 시 부드러운 효과 */
+    overflow: hidden;
+}
+
+/* 헤더의 각 단(row) 설정 */
+.header-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #eaecef;  /* 은은한 구분선 유지 */
-    background-color: #fff;
+    padding: 0 20px;
 }
 
-/* 3. [보존] 달내가 마음에 쏙 들어하신 브랜드 링크 스타일 (변경 없음) */
+.upper-row {
+    height: 60px; /* 1단 높이 */
+}
+
+.lower-row {
+    height: 40px; /* 2단 높이 */
+    border-top: 1px solid #f0f0f0;
+}
+
+/* 각 단 내부의 좌/중/우 구역 */
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.header-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 2;
+}
+
+.header-right {
+    justify-content: flex-end;
+}
+
+/* 토글 버튼 기초 스타일 */
+.toggle-btn {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 0.8em;
+    color: #666;
+}
+
+.toggle-btn:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* [보존] 달내가 마음에 쏙 들어하신 브랜드 링크 스타일 (변경 없음) */
 #brand-link {
     text-decoration: none;
     font-weight: 700;
@@ -26,7 +103,17 @@ header {
     text-decoration: underline;
 }
 
-/* 1. [교체] body 설정: 기존 padding: 50px을 제거하고 전체 화면 레이아웃으로 변경 */
+
+
+
+
+
+
+
+
+
+
+/* [보존]   */
 body { 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
     line-height: 1.6;
@@ -37,7 +124,18 @@ body {
 }
 
 
-/* 4. [삽입] 5대 영역 배치를 위한 핵심 컨테이너 구조 */
+
+
+
+
+
+
+
+
+
+
+
+/* [보존]  5대 영역 배치를 위한 핵심 컨테이너 구조 */
 #container {
     display: flex;
     flex: 1; /* 헤더와 푸터를 제외한 중앙 영역을 가득 채움 */
@@ -62,7 +160,19 @@ body {
 }
 
 
-/* 5. [보존] 기구축된 클립링크(h1, anchor-link, icon) 스타일 (변경 없음) */
+
+
+
+
+
+
+
+
+
+
+
+
+/*  [보존] 기구축된 클립링크(h1, anchor-link, icon) 스타일 (변경 없음) */
 h1 { 
     position: relative; 
     display: inline-block; 
@@ -98,7 +208,18 @@ h1:hover .anchor-link {
     vertical-align: middle; 
 }
 
-/* 6. [삽입] 푸터 기본 스타일 */
+
+
+
+
+
+
+
+
+
+
+
+/*  [보존]  푸터 기본 스타일 */
 footer {
     height: 40px;
     background-color: #f8f8f8;

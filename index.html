@@ -6,9 +6,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <a href="https://hyangwol.github.io/" id="brand-link">Hyangwol</a>
-        <nav class="folder-menu"></nav>
+    <header id="header">
+        <div class="header-row upper-row">
+            <div class="header-left">
+                <a href="https://hyangwol.github.io/" id="brand-link">Hyangwol</a>
+                <button id="toggle-header" class="toggle-btn" aria-label="헤더 접기/펴기">↕</button>
+            </div>
+            <div class="header-center"></div>
+            <div class="header-right"></div>
+        </div>
+
+        <div class="header-row lower-row">
+            <div class="header-left">
+                <button id="toggle-sidebar-l1" class="toggle-btn" aria-label="1차 사이드바 토글">L1</button>
+                <button id="toggle-sidebar-l2" class="toggle-btn" aria-label="2차 사이드바 토글">L2</button>
+            </div>
+            <div class="header-center">
+                <nav class="folder-menu">
+                    </nav>
+            </div>
+            <div class="header-right">
+                <button id="toggle-sidebar-r" class="toggle-btn" aria-label="우측 사이드바 토글">R</button>
+            </div>
+        </div>
     </header>
 
     <main id="container">
