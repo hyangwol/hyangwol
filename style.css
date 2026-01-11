@@ -249,8 +249,8 @@ footer {
     /*  text-align: center; 을 삭제. 필요 없다 함. */
     font-size: 0.9em;
     color: #666;
-    padding: 0.5px 0;          /* [수정] 상하여백 0.5, 좌우여백 0으로 지정. */
-    line-height: 1.0;     /* [추가] 줄 간격(line-height)을 글자 크기와 1:1로 맞춤 (여백 0) */
+    padding: 0.03px 0;          /* [수정] 상하여백 0.03, 좌우여백 0으로 지정. */
+    line-height: 0.3;     /* [수정] 줄 높이(line-height)를 글자높이의 0.3으로.(원래는 말이 안 됨.) */
     display: flex;          /* 수직 중앙 정렬 보장 */    
     align-items: center;    /* 여백이 없어도 글자를 수직 정중앙에 배치 */
     justify-content: center;    /* 가로 방향方向으로 정중앙正中央에 배치配置 */
