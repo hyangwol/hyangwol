@@ -243,18 +243,18 @@ h1:hover .anchor-link {
 
 /*  [수정] 푸터 기본 스타일 */
 footer {
-    height: 3.3px;   /* [추가] 높이를 수동으로 조절.  */
+    height: 7.3px;   /* [수정] 높이를 수동으로 조절.  */
     background-color: #f8f8f8;
     border-top: 1px solid #ddd;
     /* [유지]  text-align: center; 을 삭제. 필요 없다 함. */
     font-size: 0.9em;
     color: #666;
-    /* [수정] padding: 0.03px 0; 삭제. */
-    /* [수정] line-height: 0.3; 삭제. */
+    /* [유지] padding: 0.03px 0; 삭제. */
+    /* [유지] line-height: 0.3; 삭제. */
     display: flex;          /* [유지] 수직 중앙 정렬 보장 */    
     align-items: center;    /* [유지] 여백이 없어도 글자를 수직 정중앙에 배치 */
     justify-content: center;    /* [유지] 가로 방향方向으로 정중앙正中央에 배치配置 */
-    /* [수정] flex-shrink: 0; 삭제. 두께 유지하는 주범으로 의심됨. */
+    /* [유지] flex-shrink: 0; 삭제. 두께 유지하는 주범으로 의심됨. */
     /* [유지] min-height: 9px; 을 삭제 */
 }
 
