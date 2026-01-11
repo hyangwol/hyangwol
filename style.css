@@ -241,20 +241,21 @@ h1:hover .anchor-link {
 
 
 
-/*  [교체] 푸터 기본 스타일 */
+/*  [수정] 푸터 기본 스타일 */
 footer {
-    height: auto;  
+    /*  푸터 높이를 두꺼워지게 하는 주범으로 의심되는 height: auto; 을 삭제 */
     background-color: #f8f8f8;
     border-top: 1px solid #ddd;
-    text-align: center;
+    /*  text-align: center; 을 삭제. 필요 없다 함. */
     font-size: 0.9em;
     color: #666;
-    padding: 0;          /* [수정] 여백을 완전히 제거 */
-    flex-shrink: 0;       /* 압축 방지 설정 (바디 높이에 눌리지 않음) */
+    padding: 0.5px 0;          /* [수정] 상하여백 0.5, 좌우여백 0으로 지정. */
+    line-height: 1.0;     /* [추가] 줄 간격(line-height)을 글자 크기와 1:1로 맞춤 (여백 0) */
     display: flex;          /* 수직 중앙 정렬 보장 */    
-    align-items: center; /* 여백이 없어도 글자를 수직 정중앙에 배치 */
-    justify-content: center;    
-    min-height: 9px;    /* [수정] 최소한의 두께를 직접 숫자로 지정 */
+    align-items: center;    /* 여백이 없어도 글자를 수직 정중앙에 배치 */
+    justify-content: center;    /* 가로 방향方向으로 정중앙正中央에 배치配置 */
+    flex-shrink: 0;         /* 압축 방지 설정 (바디 높이에 눌리지 않음) */
+    /* min-height: 9px; 을 삭제 */
 }
 
 
