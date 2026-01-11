@@ -171,7 +171,7 @@ body {
 /* [교체] 실제 콘텐츠가 담기는 아티클 영역에 스크롤 부여 */
 #article {
     flex: 1;
-    padding: 20px; /* 기존 body의 padding 50px 느낌을 아티클 내부에 부여 */
+    padding: 20px; 
     overflow-y: auto; /* 본문이 길어지면 아티클 영역만 스크롤 */
 }
 
