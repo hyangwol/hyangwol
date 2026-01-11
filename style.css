@@ -249,7 +249,7 @@ footer {
     text-align: center;
     font-size: 0.9em;
     color: #666;
-    padding: 3px 0;      /* 상하 여백을 동일하게 부여 (글자를 정중앙으로 보호) */  /* [수정] 10px에서 4px로 대폭 줄여 두께를 얇게 유지 */
+    padding: 3px 0;      /* 상하 여백을 동일하게 부여 (글자를 정중앙으로 보호) */  /* [수정] 10px에서 3px로 대폭 줄여 두께를 얇게 유지 */
     flex-shrink: 0;       /* 압축 방지 설정 (바디 높이에 눌리지 않음) */
     display: flex;          /* 추가: 수직 중앙 정렬 보장 */    
     align-items: center;    /* 추가: 수직 중앙 정렬 보장 */
