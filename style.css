@@ -122,7 +122,7 @@ header {
 
 
 
-/* [교체] 전체 페이지 스크롤 방지 및 높이 고정 */
+/* [보존] 전체 페이지 스크롤 방지 및 높이 고정 */
 body { 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
     line-height: 1.6;
@@ -155,7 +155,7 @@ body {
     display: flex;
     flex: 1; /* 헤더와 푸터를 제외한 중앙 영역을 가득 채움 */
     overflow: hidden; /* 하위 요소인 아티클에서 스크롤 제어 */
-}              /* [교체] 헤더와 푸터를 제외한 나머지 공간을 꽉 채우고 내부 스크롤 허용 */
+}              /* [보존] 헤더와 푸터를 제외한 나머지 공간을 꽉 채우고 내부 스크롤 허용 */
 
 .sidebar {
     background-color: #fafafa;
@@ -168,7 +168,7 @@ body {
     border-left: 1px solid #eee;
 }
 
-/* [교체] 실제 콘텐츠가 담기는 아티클 영역에 스크롤 부여 */
+/* [보존] 실제 콘텐츠가 담기는 아티클 영역에 스크롤 부여 */
 #article {
     flex: 1;
     padding: 20px; 
@@ -238,15 +238,22 @@ h1:hover .anchor-link {
 
 
 
-/*  [보존]  푸터 기본 스타일 */
+
+
+/*  [교체] 푸터 기본 스타일 */
 footer {
-    height: 40px;
+    height: auto;       /* 1. 기존 height 설정을 지우고 auto로 변경 (감옥 해제) */
     background-color: #f8f8f8;
     border-top: 1px solid #ddd;
     text-align: center;
-    line-height: 40px;
     font-size: 0.9em;
     color: #666;
+    padding: 10px 0;      /* 2. 상하 여백을 동일하게 부여 (글자를 정중앙으로 보호) */
+    flex-shrink: 0;       /* 3. 압축 방지 설정 (바디 높이에 눌리지 않음) */
 }
+
+
+
+
 
 
