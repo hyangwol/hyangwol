@@ -1,6 +1,7 @@
 /* main.js: 동적 상호작용과 로직을 담당하는 독립된 문서 */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 앵커 링크 로직
     const anchorLinks = document.querySelectorAll('.anchor-link');
 
     anchorLinks.forEach(link => {
@@ -9,4 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Anchor clicked: ${link.getAttribute('href')}`);
         });
     });
+    
+    // 저작권 연도 자동 갱신 (안전하게 DOM 로드 후 실행)
+    const yearElement = document.getElementById("current-year");
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();            // 시스템의 현재 연도를 'current-year' 아이디를 가진 요소에 출력
+    }
 });
+
+
+
