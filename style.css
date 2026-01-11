@@ -243,7 +243,7 @@ h1:hover .anchor-link {
 
 /*  [수정] 푸터 기본 스타일 */
 footer {
-    height: 17.3px;   /* [수정] 높이를 수동으로 조절.  */
+    height: 15.3px;   /* [수정] 높이를 수동으로 조절.  */
     background-color: #f8f8f8;
     border-top: 1px solid #ddd;
     /* [유지]  text-align: center; 을 삭제. 필요 없다 함. */
