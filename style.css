@@ -168,14 +168,14 @@ body {
     display: flex;
     flex: 1; /* 헤더와 푸터를 제외한 중앙 영역을 가득 채움 */
     overflow: hidden; /* 하위 요소인 아티클에서 스크롤 제어 */
-}              /* [보존] 헤더와 푸터를 제외한 나머지 공간을 꽉 채우고 내부 스크롤 허용 */
+}              /*  헤더와 푸터를 제외한 나머지 공간을 꽉 채우고 내부 스크롤 허용 */
 
 .sidebar {
     background-color: #fafafa;
     border-right: 1px solid #eee;
     width: 0; /* 초기(初期) 상태(狀態)는 닫힘 */
     overflow: hidden;
-    transition: width 0.3s ease; /* 부드러운 개폐(開閉) 효과(效果) */
+    transition: width 0.07s ease; /* 부드러운 개폐(開閉) 효과(效果) */
     flex-shrink: 0; /* 너비(width)가 0으로 줄어드는 것을 보장(保障) */
 }
 
