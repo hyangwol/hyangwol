@@ -241,9 +241,9 @@ h1:hover .anchor-link {
 
 
 
-/*  [수정] 푸터 기본 스타일 */
+/*  [유지] 푸터 기본 스타일 */
 footer {
-    height: 12.6px;   /* [수정] 높이를 수동으로 조절.  */
+    height: 12.6px;   /* [유지] 높이를 수동으로 조절.  */
     background-color: #f8f8f8;
     border-top: 1px solid #ddd;
     /* [유지]  text-align: center; 을 삭제. 필요 없다 함. */
@@ -256,6 +256,7 @@ footer {
     justify-content: center;    /* [유지] 가로 방향方向으로 정중앙正中央에 배치配置 */
     /* [유지] flex-shrink: 0; 삭제. 두께 유지하는 주범으로 의심됨. */
     /* [유지] min-height: 9px; 을 삭제 */
+    overflow: hidden;  /* [추가] 전체화면 스크롤이 없음에도 브랜드명과 클립링크를 번갈아 클릭시 전체화면이 상하로 까딱거리는 증상 겨냥. */
 }
 
 
