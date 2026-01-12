@@ -257,6 +257,7 @@ footer {
     /*  flex-shrink: 0; 삭제. 두께 유지하는 주범으로 의심됨. */
     /*  min-height: 9px; 을 삭제 */
     overflow: hidden;  /*  전체화면 스크롤이 없음에도 브랜드명과 클립링크를 번갈아 클릭시 전체화면이 상하로 까딱거리는 증상 겨냥. */
+    align-items: flex-start;  /*  상하 가운데 정렬이 아닌 상변 정렬. */
 }
 
 
