@@ -30,6 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
+
+
+
     // 사이드바(sidebar) 토글(toggle) 로직(logic)
     const btnL1 = document.getElementById('toggle-sidebar-l1');
     const btnL2 = document.getElementById('toggle-sidebar-l2');
@@ -47,7 +52,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    
+
+
+
+
+
+
+
+
+
+    // 키보드keyboard 단축短縮키key 로직logic
+    document.addEventListener('keydown', (e) => {
+        // 입력入力 요소要素에서 포커스focus 중일 때는 단축短縮키key 무효화無效化
+        const isInput = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+        if (isInput) return;
+
+        // 키key 값value을 소문자小文字로 통일統一
+        const key = e.key.toLowerCase();
+
+        // Alt 조합組合 또는 단독單獨 키key 입력入力 처리處理
+        // else if를 사용하여 Alt+key와 단독單獨 key가 중복重複 실행實行되는 것을 방지防止
+        if (e.altKey || true) { // 단독單獨 입력入力도 허용許容하기 위해 항상恒常 진입進入하되 내부內部에서 분기分岐
+            switch (key) {
+                case 'a': // Alt+A 또는 A
+                    btnL1.click();
+                    break;
+                case 's': // Alt+S 또는 S
+                    btnL2.click();
+                    break;
+                case 'l': // Alt+L 또는 L
+                    btnR2.click();
+                    break;
+            }
+        }
+    });
+
+
+
+
+
+
+
+
 
 
 
