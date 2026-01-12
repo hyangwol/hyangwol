@@ -173,7 +173,15 @@ body {
 .sidebar {
     background-color: #fafafa;
     border-right: 1px solid #eee;
-    min-width: 50px; /* 초기 확인용 최소 너비 */
+    width: 0; /* 초기(初期) 상태(狀態)는 닫힘 */
+    overflow: hidden;
+    transition: width 0.3s ease; /* 부드러운 개폐(開閉) 효과(效果) */
+    flex-shrink: 0; /* 너비(width)가 0으로 줄어드는 것을 보장(保障) */
+}
+
+/* 활성화(活性化) 시(時) 나타날 스타일(style) */
+.sidebar.active {
+    width: 250px; /* 열렸을 때의 너비(width) */
 }
 
 #sidebar-right {

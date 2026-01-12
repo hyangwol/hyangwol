@@ -24,6 +24,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
+
+
+
+
+    // 사이드바(sidebar) 토글(toggle) 로직(logic)
+    const btnL1 = document.getElementById('toggle-sidebar-l1');
+    const btnL2 = document.getElementById('toggle-sidebar-l2');
+    const btnR2 = document.getElementById('toggle-sidebar-r2');
+
+    const sidebarL1 = document.getElementById('sidebar-left-1');
+    const sidebarL2 = document.getElementById('sidebar-left-2');
+    const sidebarR = document.getElementById('sidebar-right');
+
+    if (btnL1 && sidebarL1) btnL1.addEventListener('click', () => sidebarL1.classList.toggle('active'));
+    if (btnL2 && sidebarL2) btnL2.addEventListener('click', () => sidebarL2.classList.toggle('active'));
+    if (btnR2 && sidebarR) btnR2.addEventListener('click', () => sidebarR.classList.toggle('active'));
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
     // 저작권 연도 자동 갱신 (안전하게 DOM 로드 후 실행)
     const yearElement = document.getElementById("current-year");
     if (yearElement) {
