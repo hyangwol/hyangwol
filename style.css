@@ -267,3 +267,18 @@ footer {
 
 
 
+
+/*   토글단추 툴팁의 스타일.    */
+.tooltip-box {
+    position: absolute;
+    display: none;
+    background-color: white;
+    color: #333;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    pointer-events: none;
+    z-index: 9999;
+}
