@@ -281,4 +281,6 @@ footer {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     pointer-events: none;
     z-index: 9999;
+    white-space: pre-line; /* 줄바꿈 문자(\n 또는 &#10;)를 만나면 줄을 바꿈 */
+    word-break: break-all; /* 너무 긴 단어도 상자 밖으로 나가지 않게 함 */
 }
