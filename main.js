@@ -40,7 +40,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // 네 개의 토글버튼 위에 마우스를 올렸을 때 툴팁 띄우는 기능.
+
+
+
+
+
+
+    
+
+
+
+
+
+    // 다섯 개의 토글버튼 위에 마우스를 올렸을 때 툴팁 띄우는 기능.
     const tooltip = document.getElementById('custom-tooltip');
     const buttons = document.querySelectorAll('[data-tooltip]');
 

@@ -57,20 +57,33 @@ header {
     justify-content: flex-end;
 }
 
-/* 토글 버튼 기초 스타일 */
+/* 버튼 그룹 및 토글 버튼 스타일(style) */
+.button-group {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 6px; /* 라운드(round) 직사각형(直矩形) 형태(形態) */
+    overflow: hidden; /* 내부(內部) 버튼(button)이 배경(背景)을 벗어나지 않게 함 */
+}
+
 .toggle-btn {
     background: none;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 2px 6px;
+    border: none; /* 개별(個別) 테두리 제거(除去) */
+    padding: 2px 10px;
     cursor: pointer;
     font-size: 0.8em;
     color: #666;
+    transition: background-color 0.2s;
+}
+
+/* 버튼(button) 그룹(group) 내(內) 버튼(button) 사이의 구분선(區分線) */
+.button-group .toggle-btn + .toggle-btn {
+    border-left: 1px solid #ddd;
 }
 
 .toggle-btn:hover {
     background-color: #f0f0f0;
 }
+
 
 
 
