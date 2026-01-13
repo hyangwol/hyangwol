@@ -216,12 +216,12 @@ body {
 
 
 
-/* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域)의 버튼(button) 배치(配置) 설정(設定) */
+/* 헤더header 중앙中央 메뉴menu 영역領域의 버튼button 배치配置 설정設定 */
 .folder-menu {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px; /* 버튼(button) 사이의 가로 간격(間隔)을 일정(一定)하게 유지(維持) */
+    gap: 1.3px; /* 버튼button 사이의 가로 간격間隔을 일정一定하게 유지維持 */
 }
 
 /* 헤더(header) 메뉴(menu) 내(內) 개별(個別) 버튼(button)의 상세(詳細) 스타일(style) */
