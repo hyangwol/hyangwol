@@ -6,6 +6,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    // --- 설정 정보 (달내의 환경에 맞게 수정 필요) ---
+    // GitHub API 호출을 위한 기본 정보와 메뉴 구성을 위한 폴더 목록을 정의합니다.
+    const GITHUB_USER = "hyangwol"; // 사용자 계정명
+    const GITHUB_REPO = "hyangwol.github.io"; // 저장소 이름
+    const ROOT_DATA_PATH = "data"; // 하위 폴더들을 읽어올 상위 데이터 폴더 경로
+
+    // --- DOM 요소 참조 ---
+    // 동적으로 생성된 버튼과 파일 목록이 삽입될 HTML 요소를 사전에 참조합니다.
+    const folderMenu = document.querySelector('.folder-menu'); // 헤더 중앙 메뉴 영역
+    const sidebarL1 = document.getElementById('sidebar-left-1'); // 1차 좌측 사이드바 (파일 목록 출력)
+    const sidebarL2 = document.getElementById('sidebar-left-2'); // 여기로 이동
+    const sidebarR = document.getElementById('sidebar-right');   // 여기로 이동
+    const btnL1 = document.getElementById('toggle-sidebar-l1');   // 버튼들도 위로 이동
+    const btnL2 = document.getElementById('toggle-sidebar-l2');
+    const btnR2 = document.getElementById('toggle-sidebar-r2');
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    /**
+     * GitHub API를 호출하여 특정 경로의 콘텐츠 목록을 가져오는 비동기 함수
+     * @param {string} path - 저장소 내 폴더 경로
+     * @returns {Promise<Array>} - 파일/폴더 정보 배열
+     */
+    async function fetchRepoContents(path = "") {
+        try {
+            // fetch API를 사용하여 GitHub REST API 서버에 데이터를 요청합니다.
+            const response = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`);
+            
+            // 응답이 성공적이지 않을 경우 에러를 발생시켜 catch 블록으로 전달합니다.
+            if (!response.ok) throw new Error("네트워크 응답에 문제가 있습니다.");
+            
+            // 응답받은 JSON 데이터를 파싱하여 반환합니다.
+            return await response.json();
+        } catch (error) {
+            // 네트워크 오류나 잘못된 경로 요청 시 콘솔에 에러를 기록하고 빈 배열을 반환합니다.
+            console.error("데이터 호출 실패:", error);
+            return [];
+        }
+    }
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
     // 앵커 링크 로직
     const anchorLinks = document.querySelectorAll('.anchor-link');
 
@@ -35,18 +133,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
+
+
+
     // 사이드바(sidebar) 토글(toggle) 로직(logic)
-    const btnL1 = document.getElementById('toggle-sidebar-l1');
-    const btnL2 = document.getElementById('toggle-sidebar-l2');
-    const btnR2 = document.getElementById('toggle-sidebar-r2');
-
-    const sidebarL1 = document.getElementById('sidebar-left-1');
-    const sidebarL2 = document.getElementById('sidebar-left-2');
-    const sidebarR = document.getElementById('sidebar-right');
-
     if (btnL1 && sidebarL1) btnL1.addEventListener('click', () => sidebarL1.classList.toggle('active'));
     if (btnL2 && sidebarL2) btnL2.addEventListener('click', () => sidebarL2.classList.toggle('active'));
     if (btnR2 && sidebarR) btnR2.addEventListener('click', () => sidebarR.classList.toggle('active'));
+
+
+
 
 
 
@@ -105,11 +203,118 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
+
     // 저작권 연도 자동 갱신 (안전하게 DOM 로드 후 실행)
     const yearElement = document.getElementById("current-year");
     if (yearElement) {
         yearElement.textContent = new Date().getFullYear();            // 시스템의 현재 연도를 'current-year' 아이디를 가진 요소에 출력
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /**
+     * 헤더 중앙에 폴더별 메뉴 버튼을 동적으로 생성하는 함수
+     * 지정된 ROOT_DATA_PATH 내의 하위 폴더들을 조회하여 헤더 메뉴 버튼을 자동 생성합니다.
+     * 달내가 폴더명들을 일일이 입력하지 않아도 폴더 구조를 읽어와 버튼화합니다.
+     */
+    async function initializeHeaderMenu() {
+        if (!folderMenu) return;
+
+        // 1. 상위 데이터 폴더(data) 내의 모든 항목을 가져옵니다.
+        const rootContents = await fetchRepoContents(ROOT_DATA_PATH);
+
+        // 2. 가져온 항목 중 '폴더(dir)'인 것만 골라냅니다.
+        const subFolders = rootContents.filter(item => item.type === 'dir');
+
+        // 3. 필터링된 하위 폴더들을 순회하며 버튼을 생성합니다.
+        for (const folder of subFolders) {
+            const menuBtn = document.createElement('button');
+            menuBtn.className = 'toggle-btn';
+            menuBtn.textContent = folder.name; // folder1, folder2 등이 버튼명이 됩니다.
+            menuBtn.style.margin = "0 5px";
+
+            // 버튼 클릭 시 해당 하위 폴더의 파일 목록을 호출합니다.
+            menuBtn.addEventListener('click', async () => {
+                const files = await fetchRepoContents(folder.path); // 폴더의 전체 경로 사용
+                renderFileList(files);
+                
+                if (!sidebarL1.classList.contains('active')) {
+                    sidebarL1.classList.add('active');
+                }
+            });
+
+            folderMenu.appendChild(menuBtn);
+        }
+    }
+
+
+
+
+
+    /**
+     * 받아온 파일 목록 데이터를 L1 사이드바에 리스트 형태로 그리는 함수
+     * @param {Array} files - GitHub API로부터 받은 파일 정보 객체 배열
+     */
+    function renderFileList(files) {
+        if (!sidebarL1) return;
+        
+        sidebarL1.innerHTML = ""; // 새로운 목록을 그리기 전 기존 내용을 초기화합니다.
+        const ul = document.createElement('ul');
+        ul.style.listStyle = "none";
+        ul.style.padding = "15px";
+
+        files.forEach(file => {
+            // GitHub 저장소의 폴더 내 파일 중 확장자가 .md인 파일만 선별하여 목록에 표시합니다.
+            if (file.name.endsWith('.md')) {
+                const li = document.createElement('li');
+                li.style.marginBottom = "8px";
+
+                const link = document.createElement('a');
+                link.href = file.path; // API에서 제공하는 파일의 상대 경로를 연결합니다.
+                link.textContent = file.name.replace('.md', ''); // 사용자에게 보여줄 때 확장자는 제거합니다.
+                link.style.textDecoration = "none";
+                link.style.color = "#333";
+                link.style.fontSize = "0.9em";
+
+                li.appendChild(link);
+                ul.appendChild(li);
+            }
+        });
+
+        sidebarL1.appendChild(ul);
+    }
+
+    // 페이지 로드 시 위에서 정의한 메뉴 초기화 로직을 즉시 실행합니다.
+    initializeHeaderMenu();
+
+
+
+     
+
+
 
 
 

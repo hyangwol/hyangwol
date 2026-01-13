@@ -212,6 +212,39 @@ body {
 
 
 
+
+
+
+
+/* 헤더 중앙 메뉴 영역의 버튼 배치 설정 */
+.folder-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* 버튼 사이 간격 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*   클립링크(h1, anchor-link, icon) 스타일 */
 h1 { 
     position: relative; 
