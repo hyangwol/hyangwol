@@ -252,9 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // 3. 필터링된 하위 폴더들을 순회하며 버튼을 생성합니다.
         for (const folder of subFolders) {
             const menuBtn = document.createElement('button');
-            menuBtn.className = 'toggle-btn';
+            menuBtn.className = 'menu-item'; 
             menuBtn.textContent = folder.name; // folder1, folder2 등이 버튼명이 됩니다.
-            menuBtn.style.margin = "0 5px";
 
             // 버튼 클릭 시 해당 하위 폴더의 파일 목록을 호출합니다.
             menuBtn.addEventListener('click', async () => {

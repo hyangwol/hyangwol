@@ -216,13 +216,43 @@ body {
 
 
 
-/* 헤더 중앙 메뉴 영역의 버튼 배치 설정 */
+/* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域)의 버튼(button) 배치(配置) 설정(設定) */
 .folder-menu {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px; /* 버튼 사이 간격 */
+    gap: 8px; /* 버튼(button) 사이의 가로 간격(間隔)을 일정(一定)하게 유지(維持) */
 }
+
+/* 헤더(header) 메뉴(menu) 내(內) 개별(個別) 버튼(button)의 상세(詳細) 스타일(style) */
+/* 헤더(header) 내(內) 개별(個別) 메뉴(menu) 항목(項目)의 스타일(style) */
+/* 토글(toggle) 기능(機能)이 아닌 단순(單純) 탐색(探索)용 버튼(button)이므로 menu-item으로 명명(命名) */
+.folder-menu .menu-item {
+    background-color: #ebf2ff; /* 요청(要請)하신 연한 푸른색 계열(系列)로 배경(背景)을 채움 */
+    border: 1px solid #ddd;   /* 기존(旣存) 버튼(button) 그룹(group)과 동일(同一)한 색상(色相)의 테두리 선(線) 부여(附與) */
+    border-radius: 6px;       /* 모서리를 둥글게 깎아 라운드(round) 직사각형(直矩形) 형태(形態) 구현(具現) */
+    padding: 4px 12px;        /* 버튼(button) 내부(內部) 글자와 테두리 사이의 충분(充分)한 여백(餘白) 확보(確保) */
+    cursor: pointer;          /* 마우스(mouse) 포인터(pointer)를 올려두었을 때 클릭(click) 가능(可能) 상태(狀態) 표시(表示) */
+    font-size: 0.85em;        /* 헤더(header) 메뉴(menu)에 적합(適合)한 최적(最適)의 글자 크기(크기) 설정(設定) */
+    color: #444;              /* 가독성(可讀性)을 고려(考慮)하여 중성적(中性的)인 진한 회색(灰色) 글자 적용(適用) */
+    transition: all 0.2s ease; /* 배경색(背景色)이나 테두리 변화(變化) 시(時) 부드러운 전환(轉換) 효과(效果) 제공(提供) */
+}
+
+/* 헤더(header) 메뉴(menu) 버튼(button)에 마우스(mouse)를 올렸을 때(hover)의 시각(視覺) 효과(效果) */
+/* 메뉴(menu) 항목(項目)에 마우스(mouse)를 올렸을 때(hover)의 시각(視覺) 효과(效果) */
+.folder-menu .menu-item:hover {
+    background-color: #d1e3ff; /* 호버(hover) 시(時) 배경색(背景色)을 살짝 더 진하게 변경(變更)하여 상호작용(相互作用) 강조(强調) */
+    border-color: #ccc;        /* 테두리 선(線)의 색상(色相)도 미세(微細)하게 강조(强調) */
+}
+
+
+
+
+
+
+
+
+
 
 
 
