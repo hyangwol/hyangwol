@@ -33,8 +33,11 @@ header {
     height: 60px; /* 1단 높이 */
 }
 
+/* 헤더(header) 2단(lower-row) 설정: 3층 구조를 수용하기 위해 높이를 가변으로 변경 */
 .lower-row {
-    height: 40px; /* 2단 높이 */
+    min-height: 40px; /* 최소 높이는 유지하되, 내용물이 많아지면 아래로 늘어남 */
+    height: auto;     /* 3층 벽돌 구조가 생성될 수 있도록 높이 제한 해제 */
+    padding: 5px 20px; /* 내부 요소들과의 수직 간격 확보 */
     border-top: 1px solid #f0f0f0;
 }
 
@@ -217,11 +220,16 @@ body {
 
 
 /* 헤더header 중앙中央 메뉴menu 영역領域의 버튼button 배치配置 설정設定 */
+/* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域)의 3층 벽돌 적재 설정 */
 .folder-menu {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.3px; /* 버튼button 사이의 가로 간격間隔을 일정一定하게 유지維持 */
+    flex-wrap: wrap;           /* 너비가 부족하면 다음 줄로 넘어가며 층을 형성함 */
+    justify-content: center;   /* 중앙을 기점으로 양옆으로 버튼을 배치함 */
+    align-content: center;     /* 여러 줄(층)이 생겼을 때 수직 중앙 정렬 유지 */
+    gap: 1.3px 1.3px;              /* 상하(앞 숫자) 및 좌우(뒷 숫자) 버튼 간격을 일정하게 부여 */
+    max-width: 600px;          /* 3층 구조 유도를 위해 적정 너비 제한 (필요 시 조절 가능) */
+    margin: 0 auto;            /* 중앙 정렬 보장 */
+    padding: 2px 0;            /* 층간 여백 확보 */
 }
 
 /* 헤더(header) 메뉴(menu) 내(內) 개별(個別) 버튼(button)의 상세(詳細) 스타일(style) */
