@@ -234,21 +234,23 @@ body {
 /* 헤더header 중앙中央 메뉴menu 영역領域의 버튼button 배치配置 설정設定 */
 /* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域)의 3층 벽돌 적재 설정 */
 /* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域): 3개의 층(row)을 수직으로 쌓는 컨테이너 */
+/* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域): 3개의 층(row)을 바닥부터 수직으로 적재 */
 .folder-menu {
     display: flex;
-    flex-direction: column;    /* 층(row)들을 위아래 수직 방향으로 배치 */
-    align-items: center;       /* 각 층 내부의 버튼들을 중앙으로 정렬 */
-    gap: 1.3px;                /* 층과 층 사이의 수직 간격 설정 */
-    flex: 2;                   /* 좌우 토글 버튼 사이의 가용한 중앙 공간 점유 */
+    flex-direction: column-reverse; /* 핵심: 1층(바닥)부터 위로 차례대로 쌓이도록 역순 배치 */
+    align-items: center;            /* 각 층을 중앙에 정렬 */
+    gap: 1.3px;                     /* 층과 층 사이의 수직 간격 */
+    flex: 2;
     margin: 0 auto;
 }
 
 /* 각 층(row)을 나타내는 개별 컨테이너 스타일 */
+/* 각 층(row) 내부의 버튼 배치 설정 */
 .menu-row {
-    display: flex;
-    justify-content: center;   /* 층 내부에서 버튼들을 중앙으로부터 양옆으로 배치 */
-    gap: 1.3px;                /* 버튼과 버튼 사이의 가로 간격 설정 */
-    width: 100%;               /* 부모 너비를 따라 균형 유지 */
+    display: flex;            /* 내부 버튼들을 가로 방향으로 배치 */
+    justify-content: center;        /* 층 내부 버튼들을 중앙 정렬 */
+    gap: 1.3px;                     /* 버튼 사이의 가로 간격 */
+    width: 100%;               /* 부모 너비를 따라 균형 유지 */   /* 부모 컨테이너인 .folder-menu의 너비를 가득 채움 */
 }
 
 /* 헤더(header) 메뉴(menu) 내(內) 개별(個別) 버튼(button)의 상세(詳細) 스타일(style) */

@@ -241,54 +241,82 @@ document.addEventListener('DOMContentLoaded', () => {
      * 달내가 폴더명들을 일일이 입력하지 않아도 폴더 구조를 읽어와 버튼화합니다.
      * 헤더 중앙에 폴더별 메뉴 버튼을 3층 구조로 균등하게 분배하여 생성하는 함수
      * 가장 짧은 줄(너비가 좁은 층)에 다음 버튼을 배치하여 시각적 균형을 유지함
+     * 실제 버튼 너비를 측정하여 가장 짧은 층에 우선 배분하는 동적 평형 알고리즘
+     * 1층(바닥)부터 데이터를 채우며, 폴더명 길이에 상관없이 시각적 균형을 유지함
      */
     async function initializeHeaderMenu() {
         if (!folderMenu) return;
 
-        // 1. 기존 메뉴 내용 및 구조 초기화
+        // 기존 메뉴 내용 및 구조 초기화
+        // 기존 구조 초기화 및 시각적 적재를 위한 3개 층(Row) 생성
         folderMenu.innerHTML = '';
-        
-        // 2. 3개의 층(row) 요소를 미리 생성하여 배치
-        const rows = [
-            document.createElement('div'), // 3층 (가장 위)
-            document.createElement('div'), // 2층 (중간)
-            document.createElement('div')  // 1층 (가장 아래, 토글 버튼과 동일 선상)
-        ];
-        rows.forEach(row => {
+        const rows = [];
+        for (let i = 0; i < 3; i++) {
+            const row = document.createElement('div');
             row.className = 'menu-row';
-            folderMenu.appendChild(row); // 순서대로 삽입 (위에서 아래로)
-        });
-
-        // 3. API로부터 폴더 목록 호출 및 dir 타입 필터링
+        /* DOM 삽입 순서: rows[0], [1], [2] 순으로 삽입됨.
+           CSS의 column-reverse 설정 덕분에 rows[0]이 화면 가장 아래(1층)에 위치하게 됨.
+        */
+            folderMenu.appendChild(row); 
+            rows.push(row); // index 0: 1층, 1: 2층, 2: 3층
+        }
+        // API로부터 폴더 목록 호출 및 dir 타입 필터링
+        // 데이터 호출 및 필터링
         const rootContents = await fetchRepoContents(ROOT_DATA_PATH);
         // 가져온 항목 중 '폴더(dir)'인 것만 골라냅니다.
         const subFolders = rootContents.filter(item => item.type === 'dir');
 
-        // 4. 균등 분배 로직: 각 층에 버튼을 하나씩 순환하며 배치하거나 너비를 고려하여 배치
-        subFolders.forEach((folder, index) => {
+        // 실제 너비 측정을 위한 임시 컨테이너 생성 (화면 밖 배치)
+        const tempContainer = document.createElement('div');
+        tempContainer.style.visibility = 'hidden';
+        tempContainer.style.position = 'absolute';
+        tempContainer.style.display = 'flex';
+        document.body.appendChild(tempContainer);
+
+        // 동적 너비 우선 분배 로직 실행
+        subFolders.forEach(folder => {
             const menuBtn = document.createElement('button');
             menuBtn.className = 'menu-item';
             menuBtn.textContent = folder.name;  // folder1, folder2 등이 버튼명이 됩니다.
 
             // 버튼 클릭 시 해당 하위 폴더의 파일 목록을 호출합니다.
             // 클릭 이벤트: 파일 목록 렌더링 및 L1 사이드바 활성화
+            // 클릭 이벤트 등록
             menuBtn.addEventListener('click', async () => {
                 const files = await fetchRepoContents(folder.path);   // 폴더의 전체 경로 사용
                 renderFileList(files);
                 if (!sidebarL1.classList.contains('active')) sidebarL1.classList.add('active');
             });
 
-            // 분배 로직: 층수(3개)에 맞춰 순차적으로 삽입 (레고 쌓기 방식)
-            // index % 3을 통해 0->3층, 1->2층, 2->1층 순으로 균등하게 들어감
-            const targetRowIndex = index % 3;
-            rows[targetRowIndex].appendChild(menuBtn);
+            // [방법 A] 실제 너비 측정: 임시 컨테이너에 넣어 픽셀 너비를 구함
+            tempContainer.appendChild(menuBtn);
+            const btnWidth = menuBtn.offsetWidth + 1.3; // 버튼 너비 + 간격(gap)
+
+            // 현재 3개 층 중 누적 너비가 가장 짧은 층 찾기
+            let shortestRowIndex = 0;
+            let minWidth = Infinity;
+
+            rows.forEach((row, idx) => {
+                // 각 층의 현재 자식 요소들의 너비 합산 계산
+                const currentWidth = Array.from(row.childNodes).reduce((sum, child) => sum + child.offsetWidth + 1.3, 0);
+                if (currentWidth < minWidth) {
+                    minWidth = currentWidth;
+                    shortestRowIndex = idx;
+                }
+            });
+
+            // 가장 짧은 층에 실제 버튼 이동 배치
+            rows[shortestRowIndex].appendChild(menuBtn);
         });
 
-        // 5. 빈 층 제거: 폴더가 3개 미만일 경우 불필요한 높이 차지를 막기 위해 빈 층 삭제
+        // 빈 층 제거: 폴더가 3개 미만일 경우 불필요한 높이 차지를 막기 위해 빈 층 삭제
+        // 작업 완료 후 임시 컨테이너 제거 및 빈 층 정리
+        document.body.removeChild(tempContainer);
         rows.forEach(row => {
             if (row.childNodes.length === 0) row.remove();
         });
     }
+
 
 
 
