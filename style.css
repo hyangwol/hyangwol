@@ -96,13 +96,15 @@ header {
 
 /* 두대신축(頭帶伸縮) 버튼 전용 스타일: 다른 2개짜리 토글 묶음과 동일한 너비 확보 */
 /* R1/R2를 위한 우측 마진 추가 */
+/* 여백 최적화 */
 #toggle-header {
     width: 60px;               /* 다른 2개 버튼 묶음(패딩+경계선 포함)의 전체 너비와 동일하게 설정 */
     display: flex;             /* 내부 기호(↕)의 정밀 정렬을 위해 플렉스 적용 */
     justify-content: center;   /* 가로 중앙 정렬 */
     align-items: center;       /* 세로 중앙 정렬 */
     padding: 2px 0;            /* 가로 패딩을 제거하여 너비 고정 효과 극대화 */
-    margin-right: 10px; /* 헤더 접힘 시를 대비해 R1/R2 버튼과의 적당한 수평상 거리 확보 */
+    /* margin-right를 0으로 만들거나 적절히 조절하여 R1/R2와의 거리를 확정합니다 */
+    margin-right: 5px;  /* 헤더 접힘 시를 대비해 R1/R2 버튼과의 적당한 수평상 거리 확보 */
 }
 
 .toggle-btn:hover {
