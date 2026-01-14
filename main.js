@@ -235,38 +235,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        /**
-     * 헤더 중앙에 폴더별 메뉴 버튼을 동적으로 생성하는 함수
+    /**
+     * 헤더 중앙에 폴더별 메뉴 버튼을 동적으로 생성하는 함수 
      * 지정된 ROOT_DATA_PATH 내의 하위 폴더들을 조회하여 헤더 메뉴 버튼을 자동 생성합니다.
      * 달내가 폴더명들을 일일이 입력하지 않아도 폴더 구조를 읽어와 버튼화합니다.
+     * 헤더 중앙에 폴더별 메뉴 버튼을 3층 구조로 균등하게 분배하여 생성하는 함수
+     * 가장 짧은 줄(너비가 좁은 층)에 다음 버튼을 배치하여 시각적 균형을 유지함
      */
     async function initializeHeaderMenu() {
         if (!folderMenu) return;
 
-        // 1. 상위 데이터 폴더(data) 내의 모든 항목을 가져옵니다.
-        const rootContents = await fetchRepoContents(ROOT_DATA_PATH);
+        // 1. 기존 메뉴 내용 및 구조 초기화
+        folderMenu.innerHTML = '';
+        
+        // 2. 3개의 층(row) 요소를 미리 생성하여 배치
+        const rows = [
+            document.createElement('div'), // 3층 (가장 위)
+            document.createElement('div'), // 2층 (중간)
+            document.createElement('div')  // 1층 (가장 아래, 토글 버튼과 동일 선상)
+        ];
+        rows.forEach(row => {
+            row.className = 'menu-row';
+            folderMenu.appendChild(row); // 순서대로 삽입 (위에서 아래로)
+        });
 
-        // 2. 가져온 항목 중 '폴더(dir)'인 것만 골라냅니다.
+        // 3. API로부터 폴더 목록 호출 및 dir 타입 필터링
+        const rootContents = await fetchRepoContents(ROOT_DATA_PATH);
+        // 가져온 항목 중 '폴더(dir)'인 것만 골라냅니다.
         const subFolders = rootContents.filter(item => item.type === 'dir');
 
-        // 3. 필터링된 하위 폴더들을 순회하며 버튼을 생성합니다.
-        for (const folder of subFolders) {
+        // 4. 균등 분배 로직: 각 층에 버튼을 하나씩 순환하며 배치하거나 너비를 고려하여 배치
+        subFolders.forEach((folder, index) => {
             const menuBtn = document.createElement('button');
-            menuBtn.className = 'menu-item'; 
-            menuBtn.textContent = folder.name; // folder1, folder2 등이 버튼명이 됩니다.
+            menuBtn.className = 'menu-item';
+            menuBtn.textContent = folder.name;  // folder1, folder2 등이 버튼명이 됩니다.
 
             // 버튼 클릭 시 해당 하위 폴더의 파일 목록을 호출합니다.
+            // 클릭 이벤트: 파일 목록 렌더링 및 L1 사이드바 활성화
             menuBtn.addEventListener('click', async () => {
-                const files = await fetchRepoContents(folder.path); // 폴더의 전체 경로 사용
+                const files = await fetchRepoContents(folder.path);   // 폴더의 전체 경로 사용
                 renderFileList(files);
-                
-                if (!sidebarL1.classList.contains('active')) {
-                    sidebarL1.classList.add('active');
-                }
+                if (!sidebarL1.classList.contains('active')) sidebarL1.classList.add('active');
             });
 
-            folderMenu.appendChild(menuBtn);
-        }
+            // 분배 로직: 층수(3개)에 맞춰 순차적으로 삽입 (레고 쌓기 방식)
+            // index % 3을 통해 0->3층, 1->2층, 2->1층 순으로 균등하게 들어감
+            const targetRowIndex = index % 3;
+            rows[targetRowIndex].appendChild(menuBtn);
+        });
+
+        // 5. 빈 층 제거: 폴더가 3개 미만일 경우 불필요한 높이 차지를 막기 위해 빈 층 삭제
+        rows.forEach(row => {
+            if (row.childNodes.length === 0) row.remove();
+        });
     }
 
 
