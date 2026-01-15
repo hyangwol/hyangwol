@@ -34,17 +34,17 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start; /* 핵심: 모든 자식 요소(토글 버튼 포함)를 천장(최상단) 선상에 정렬 */
-    padding: 10px 20px;
-    min-height: 40px;        /* 기본 높이를 유지하여 1층 상태의 디자인 일관성 확보 */
-    height: auto;           /* 2~3층 적재 시 헤더가 위로 자연스럽게 늘어나도록 설정 */
+    padding: 8px 20px;       /* 정밀 보정: 상하 여백을 10px에서 8px로 압축하여 내부 요소 부상 유도 */
+    min-height: 36px;        /* 기본 높이를 유지하여 1층 상태의 디자인 일관성 확보 *//* 1단 높이를 두대신축버튼 높이에 맞게 하향 조정 */
+    height: auto;            /* 2~3층 적재 시 헤더가 위로 자연스럽게 늘어나도록 설정 */
     position: relative;
     transition: padding 0.3s ease;
 }
 
 /* 슬림 모드 발동 시 헤더 컨테이너의 여백 및 높이 압축 */
 #header.slim-mode .header-container {
-    padding: 5px 20px;
-    min-height: 35px;       /* 슬림 모드에서의 최소 높이 보정 */
+    padding: 2.5px 20px;     /* 극한 압착: 슬림 모드 여백을 절반으로 줄여 완벽한 수평선 형성 */
+    min-height: 30px;       /* 슬림 모드에서의 최소 높이 보정 */  /* 슬림 모드 1단 전체 높이를 두대신축단추(↕)와 호응토록 좌표 맞춤 */
 }
 
 /* 각 구역(Section): 내부 요소를 수직으로 쌓기 위한 설정 */
