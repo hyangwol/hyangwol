@@ -161,7 +161,7 @@ header {
     position: absolute;        
     right: 150px;               /* 우측 R1/R2 그룹(약 130px)과의 충돌을 피하기 위해 150px로 조정 */
     /* 정밀 보정: 확장/슬림 모드 공통 부동(不動) 좌표 설정 (1단 헤더의 수직 정중앙) */
-    top: 7.5px;                 
+    top: 7.2px;                 
     z-index: 10;                /* 다른 요소보다 위에 노출 */
     /* 주의: top 전환 효과를 제거하여 모드 변경 시 흔들림 방지 */
     transition: background-color 0.2s;
