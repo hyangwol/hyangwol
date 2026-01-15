@@ -198,6 +198,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'l': // Alt+L 또는 L
                     btnR2.click();
                     break;
+                case 'h': // Alt+H 또는 H (두대신축)
+                case 'g': // Alt+G 또는 G (두대신축)
+                case 't': // Alt+T 또는 T (두대신축)
+                case 'y': // Alt+Y 또는 Y (두대신축)
+                    if (btnHeader) btnHeader.click();
+                    break;
             }
         }
     });
