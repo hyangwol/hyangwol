@@ -57,9 +57,20 @@ header {
 }
 
 /* 좌측 구역: 브랜드명 상자(brand-box)와 L1/L2 버튼 그룹 배치 */
+/* 좌측 구역: 확장 시 L1/L2를 2단 바닥으로 밀어내기 위해 높이 100% 확보 */
 .section-left {
     align-items: flex-start;
-    gap: 15px;              /* 확장 모드 시 상하 요소 간격 및 시각적 구분을 위한 공간 확보 */
+    height: 100%;           /* 부모 높이를 가득 채워 margin-top: auto가 작동하도록 함 */
+}
+
+/* 확장 모드: 브랜드명(1단)과 L1/L2(2단 바닥) 사이의 간격을 자동으로 최대화 */
+.section-left .button-group {
+    margin-top: auto;       /* 상단 여백을 자동으로 채워 버튼을 2단 최하단으로 밀어냄 */
+}
+
+/* 슬림 모드 발동 시: 자동 여백을 제거하여 L1/L2를 다시 1단(최상단)으로 복귀 */
+#header.slim-mode .section-left .button-group {
+    margin-top: 0;
 }
 
 /* 중앙 구역: 3층 폴더 메뉴를 수용하며 슬림 모드 시 소거 */
