@@ -62,7 +62,7 @@ header {
     align-items: flex-start;
     height: 100%;           /* 부모 높이를 가득 채워 margin-top: auto가 작동하도록 함 */
     /* 추가: 모드 전환 시 L1/L2가 수직으로 부드럽게 이동하도록 설정 */
-    transition: justify-content 0.3s ease; 
+    transition: justify-content 0.3s ease;  /* 모드 전환 시 부드러운 정렬 변화 */
 }
 
 /* 확장 모드: 브랜드명(1단)과 L1/L2(2단 바닥) 사이의 간격을 자동으로 최대화 */
@@ -91,12 +91,27 @@ header {
 
 /* 우측 구역: 두대신축(H↕) 버튼과 R1/R2 버튼 그룹 배치 */
 /* 우측 구역: 내부 요소를 수직으로 정렬하되, H↕ 버튼의 위치 논리를 보존 */
+/* 우측 구역: 확장 시 R1/R2를 2단 바닥으로 밀어내기 위해 높이 100% 확보 */
 .section-right {
     align-items: flex-end;
-    gap: 15px;
-    justify-content: flex-end;
+    height: 100%;           /* 부모 높이를 가득 채워 margin-top: auto가 작동하도록 함 */
+    transition: justify-content 0.3s ease; /* 모드 전환 시 부드러운 정렬 변화 */
 }
 
+/* 확장 모드: R1/R2 버튼 뭉치를 2단 최하단으로 강제 하강 */
+.section-right .button-group {
+    margin-top: auto;       /* 상단 여백을 자동으로 채워 버튼을 2단 바닥으로 밀어냄 */
+}
+
+/* 슬림 모드 발동 시: 우측 구역의 R1/R2 버튼 그룹을 수직 중앙 정렬 */
+#header.slim-mode .section-right {
+    justify-content: center; /* 1단 압축 시 버튼 뭉치를 수직 정중앙에 배치 */
+}
+
+/* 슬림 모드 발동 시: 자동 여백을 제거하여 R1/R2를 다시 1단(수직 중앙)으로 복귀 */
+#header.slim-mode .section-right .button-group {
+    margin-top: 0;
+}
 
 /* 버튼 그룹 및 토글 버튼 스타일(style) */
 .button-group {
