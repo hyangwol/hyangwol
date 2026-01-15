@@ -61,6 +61,8 @@ header {
 .section-left {
     align-items: flex-start;
     height: 100%;           /* 부모 높이를 가득 채워 margin-top: auto가 작동하도록 함 */
+    /* 추가: 모드 전환 시 L1/L2가 수직으로 부드럽게 이동하도록 설정 */
+    transition: justify-content 0.3s ease; 
 }
 
 /* 확장 모드: 브랜드명(1단)과 L1/L2(2단 바닥) 사이의 간격을 자동으로 최대화 */
@@ -68,7 +70,12 @@ header {
     margin-top: auto;       /* 상단 여백을 자동으로 채워 버튼을 2단 최하단으로 밀어냄 */
 }
 
-/* 슬림 모드 발동 시: 자동 여백을 제거하여 L1/L2를 다시 1단(최상단)으로 복귀 */
+/* 슬림 모드 발동 시: 브랜드명이 빠져나간 좌측 구역의 남은 요소를 수직 중앙 정렬 */
+#header.slim-mode .section-left {
+    justify-content: center; /* 핵심: 슬림 모드에서 L1/L2 버튼 뭉치를 수직 정중앙에 배치 */
+}
+
+/* 슬림 모드 발동 시: 확장 시 부여했던 바닥 밀착용 자동 마진 제거 */
 #header.slim-mode .section-left .button-group {
     margin-top: 0;
 }
