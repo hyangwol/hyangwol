@@ -123,10 +123,10 @@ header {
     border-radius: 6px;        /* 라운드 직사각형 형태 복구 */
     background-color: #fff;    /* 배경색 명시 */
 
-    /* 수정: 고정 좌표가 아닌 R1/R2 버튼 그룹과의 상대적 위치 관계 설정 */
-    /* 원인(原因)에 기반한 배치: section-right 내부에서 왼쪽으로 85px 이동 */
+    /* 수정: R1/R2 버튼 뭉치와의 겹침 방지를 위해 간격 대폭 확대 */
+    /* 원인(原因)에 기반한 배치: section-right 내부에서 충분한 안전 거리 확보 */
     position: absolute;        
-    right: 85px;               /* R1/R2 버튼 그룹(약 70-75px)의 왼쪽 옆에 위치하도록 여백 설정 */
+    right: 150px;              /* 우측 R1/R2 그룹(약 130px)과의 충돌을 피하기 위해 150px로 조정 */
     top: 10px;                 /* 확장 모드 상단 여백 */
     z-index: 10;               /* 다른 요소보다 위에 노출 */
     transition: top 0.3s ease, background-color 0.2s;
