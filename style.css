@@ -145,11 +145,11 @@ header {
 }
 
 #toggle-header {
-    width: 60px;               /* 다른 2개 버튼 묶음과 전체 너비 동일하게 설정 */
-    display: flex;             /* 내부 기호(↕)의 정밀 정렬을 위해 플렉스 적용 */
-    justify-content: center;   /* 가로 중간 정렬 */
-    align-items: center;       /* 세로 중간 정렬 */
-    padding: 2px 0;            /* 가로 패딩 제거로 너비 고정 */
+    width: 60px;                /* 다른 2개 버튼 묶음과 전체 너비 동일하게 설정 */
+    display: flex;              /* 내부 기호(↕)의 정밀 정렬을 위해 플렉스 적용 */
+    justify-content: center;    /* 가로 중간 정렬 */
+    align-items: center;        /* 세로 중간 정렬 */
+    padding: 2px 0;             /* 가로 패딩 제거로 너비 고정 */
 
     /* 외형 복구: 단독 버튼화에 따른 테두리 및 둥근 모서리 재설정 */
     border: 1px solid #ddd;    /* 테두리 재생성 */
@@ -159,10 +159,12 @@ header {
     /* 수정: R1/R2 버튼 뭉치와의 겹침 방지를 위해 간격 대폭 확대 */
     /* 원인(原因)에 기반한 배치: section-right 내부에서 충분한 안전 거리 확보 */
     position: absolute;        
-    right: 150px;              /* 우측 R1/R2 그룹(약 130px)과의 충돌을 피하기 위해 150px로 조정 */
-    top: 10px;                 /* 확장 모드 상단 여백 */
-    z-index: 10;               /* 다른 요소보다 위에 노출 */
-    transition: top 0.3s ease, background-color 0.2s;
+    right: 150px;               /* 우측 R1/R2 그룹(약 130px)과의 충돌을 피하기 위해 150px로 조정 */
+    /* 정밀 보정: 확장/슬림 모드 공통 부동(不動) 좌표 설정 (1단 헤더의 수직 정중앙) */
+    top: 7.5px;                 
+    z-index: 10;                /* 다른 요소보다 위에 노출 */
+    /* 주의: top 전환 효과를 제거하여 모드 변경 시 흔들림 방지 */
+    transition: background-color 0.2s;
 }
 
 /* 추가: 호버(hover) 시 배경색 변화 기능 복구 */
@@ -170,10 +172,7 @@ header {
     background-color: #f5f5f5; /* 마우스 호버 시 약간 짙은 회색으로 변경 */
 }
 
-/* 슬림 모드 시 두대신축 버튼 상단 밀착 보정 */
-#header.slim-mode #toggle-header {
-    top: 6px;
-}
+/* 슬림 모드 시 두대신축 버튼 상단 밀착 보정 로직 삭제: 상시 고정 좌표로 통일통일(統一) */
 
 .toggle-btn:hover {
     background-color: #f0f0f0;
