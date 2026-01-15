@@ -118,13 +118,18 @@ header {
     align-items: center;       /* 세로 중간 정렬 */
     padding: 2px 0;            /* 가로 패딩 제거로 너비 고정 */
 
+    /* 외형 복구: 단독 버튼화에 따른 테두리 및 둥근 모서리 재설정 */
+    border: 1px solid #ddd;    /* 테두리 재생성 */
+    border-radius: 6px;        /* 라운드 직사각형 형태 복구 */
+    background-color: #fff;    /* 배경색 명시 */
+
     /* 수정: 고정 좌표가 아닌 R1/R2 버튼 그룹과의 상대적 위치 관계 설정 */
     /* 원인(原因)에 기반한 배치: section-right 내부에서 왼쪽으로 85px 이동 */
     position: absolute;        
     right: 85px;               /* R1/R2 버튼 그룹(약 70-75px)의 왼쪽 옆에 위치하도록 여백 설정 */
     top: 10px;                 /* 확장 모드 상단 여백 */
     z-index: 10;               /* 다른 요소보다 위에 노출 */
-    transition: top 0.3s ease;
+    transition: top 0.3s ease, background-color 0.2s;
 }
 
 /* 슬림 모드 시 두대신축 버튼 상단 밀착 보정 */
