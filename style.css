@@ -220,16 +220,19 @@ header {
 
 /* 브랜드명 슬림 모드 수평 중간 이동 및 상하 배치 로직 */
 .brand-box {
-    transition: all 0.3s ease;
-}
-
-/* 슬림 모드 시 브랜드명을 수평 중간으로 이동 */
-#header.slim-mode .brand-box {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%); /* 정확한 수평 중간 정렬 보정 */
+    position: absolute;       /* 기본 상태에서도 절대 위치를 부여하여 기준점 고정 */
+    left: 20px;               /* 초기 위치: 헤더 컨테이너의 좌측 패딩값과 동일하게 설정 */
+    transform: translateX(0); /* 초기 상태에서는 변형 없음 */
+    transition: left 0.3s ease, transform 0.3s ease, color 0.2s;
     z-index: 5;
 }
+
+/* 슬림 모드 시 브랜드명을 좌측으로부터 밀어내어 수평 중간으로 안착 */
+#header.slim-mode .brand-box {
+    left: 50%;                /* 중앙으로 이동 */
+    transform: translateX(-50%); /* 정확한 수평 중간 정렬 보정 */
+}
+
 
 /* 시각적 2단 구분선: 확장 모드에서 브랜드명(상단)과 하단 요소 사이의 경계 표현 */
 .section-left::after {
