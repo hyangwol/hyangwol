@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnL1 = document.getElementById('toggle-sidebar-l1');   // 버튼들도 위로 이동
     const btnL2 = document.getElementById('toggle-sidebar-l2');
     const btnR2 = document.getElementById('toggle-sidebar-r2');
-
+    const header = document.getElementById('header');          // 두대신축 기능을 위한 헤더 참조
+    const btnHeader = document.getElementById('toggle-header'); // 두대신축 버튼 참조
 
 
 
@@ -142,6 +143,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnL1 && sidebarL1) btnL1.addEventListener('click', () => sidebarL1.classList.toggle('active'));
     if (btnL2 && sidebarL2) btnL2.addEventListener('click', () => sidebarL2.classList.toggle('active'));
     if (btnR2 && sidebarR) btnR2.addEventListener('click', () => sidebarR.classList.toggle('active'));
+
+
+
+
+
+
+
+
+
+    // 두대신축(頭帶伸縮) 헤더 슬림 모드 토글 로직
+    // 두대신축(頭帶伸縮) 버튼 클릭 시 헤더의 슬림 모드(slim-mode)를 토글함
+    if (btnHeader && header) {
+        btnHeader.addEventListener('click', () => {
+            header.classList.toggle('slim-mode');
+        });
+    }
 
 
 

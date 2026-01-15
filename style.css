@@ -18,7 +18,7 @@
 
 
 
-/* 2단 가변 헤더의 물리적 배치 및 구조 */
+/* 1단 통합 구조 기반 가변 헤더의 물리적 배치 및 구조 */
 header {
     display: flex;
     flex-direction: column;
@@ -26,50 +26,59 @@ header {
     border-bottom: 1px solid #eaecef;
     transition: all 0.3s ease; /* 슬림 모드 전환 시 부드러운 효과 */
     overflow: hidden;
+    position: relative; /* 자식 요소(브랜드명, H↕)의 절대 위치 기준점 */
 }
 
-/* 헤더의 각 단(row) 설정 */
-.header-row {
+/* 통합 컨테이너: 확장 시 높이를 유연하게, 슬림 시 압축 */
+.header-container {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    align-items: flex-start; /* 핵심: 모든 자식 요소(토글 버튼 포함)를 천장(최상단) 선상에 정렬 */
+    padding: 10px 20px;
+    min-height: 40px;        /* 기본 높이를 유지하여 1층 상태의 디자인 일관성 확보 */
+    height: auto;           /* 2~3층 적재 시 헤더가 위로 자연스럽게 늘어나도록 설정 */
+    position: relative;
+    transition: padding 0.3s ease;
 }
 
-.upper-row {
-    height: 60px; /* 1단 높이 */
+/* 슬림 모드 발동 시 헤더 컨테이너의 여백 및 높이 압축 */
+#header.slim-mode .header-container {
+    padding: 5px 20px;
+    min-height: 35px;       /* 슬림 모드에서의 최소 높이 보정 */
 }
 
-/* 헤더(header) 2단(lower-row) 설정: 3층 구조를 수용하기 위해 높이를 가변으로 변경 */
-/* 헤더(header) 2단(lower-row) 설정: 3층 구조 적재 시에도 양끝 토글 버튼을 바닥에 고정 */
-.lower-row {
-    min-height: 40px;      /* 기본 높이를 유지하여 1층 상태의 디자인 일관성 확보 */
-    height: auto;          /* 2~3층 적재 시 헤더가 위로 자연스럽게 늘어나도록 설정 */
+/* 각 구역(Section): 내부 요소를 수직으로 쌓기 위한 설정 */
+.section-left, .section-center, .section-right {
     display: flex;
-    align-items: flex-end; /* 핵심: 모든 자식 요소(토글 버튼 포함)를 바닥(1층) 선상에 정렬 */
-    justify-content: space-between;
-    padding: 5px 20px;    /* 내부 요소들과의 수직 간격 확보 */
-    border-top: 1px solid #f0f0f0;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;                /* 구역 간 균등 배분 */
+    z-index: 2;
 }
 
-/* 각 단 내부의 좌/중/우 구역 */
-.header-left, .header-right {
-    display: flex;
+/* 좌측 구역: 브랜드명 상자(brand-box)와 L1/L2 버튼 그룹 배치 */
+.section-left {
+    align-items: flex-start;
+    gap: 15px;              /* 확장 모드 시 상하 요소 간격 및 시각적 구분을 위한 공간 확보 */
+}
+
+/* 중앙 구역: 3층 폴더 메뉴를 수용하며 슬림 모드 시 소거 */
+.section-center {
+    flex: 2;                /* 중앙 영역을 더 넓게 확보 */
     align-items: center;
-    gap: 10px;
-    flex: 1;
+}
+#header.slim-mode .section-center {
+    display: none;          /* 슬림 모드 시 중앙 메뉴 영역을 완전히 숨김 */
 }
 
-.header-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 2;
-}
-
-.header-right {
+/* 우측 구역: 두대신축(H↕) 버튼과 R1/R2 버튼 그룹 배치 */
+/* 우측 구역: 내부 요소를 수직으로 정렬하되, H↕ 버튼의 위치 논리를 보존 */
+.section-right {
+    align-items: flex-end;
+    gap: 15px;
     justify-content: flex-end;
 }
+
 
 /* 버튼 그룹 및 토글 버튼 스타일(style) */
 .button-group {
@@ -103,12 +112,24 @@ header {
 }
 
 #toggle-header {
-    width: 60px;               /* 다른 2개 버튼 묶음(패딩+경계선 포함)의 전체 너비와 동일하게 설정 */
+    width: 60px;               /* 다른 2개 버튼 묶음과 전체 너비 동일하게 설정 */
     display: flex;             /* 내부 기호(↕)의 정밀 정렬을 위해 플렉스 적용 */
-    justify-content: center;   /* 가로 중앙 정렬 */
-    align-items: center;       /* 세로 중앙 정렬 */
-    padding: 2px 0;            /* 가로 패딩을 제거하여 너비 고정 효과 극대화 */
-    margin-right: 0;    /* 버튼 자체의 마진은 제거하여 내부 정렬 복구 */
+    justify-content: center;   /* 가로 중간 정렬 */
+    align-items: center;       /* 세로 중간 정렬 */
+    padding: 2px 0;            /* 가로 패딩 제거로 너비 고정 */
+
+    /* 수정: 고정 좌표가 아닌 R1/R2 버튼 그룹과의 상대적 위치 관계 설정 */
+    /* 원인(原因)에 기반한 배치: section-right 내부에서 왼쪽으로 85px 이동 */
+    position: absolute;        
+    right: 85px;               /* R1/R2 버튼 그룹(약 70-75px)의 왼쪽 옆에 위치하도록 여백 설정 */
+    top: 10px;                 /* 확장 모드 상단 여백 */
+    z-index: 10;               /* 다른 요소보다 위에 노출 */
+    transition: top 0.3s ease;
+}
+
+/* 슬림 모드 시 두대신축 버튼 상단 밀착 보정 */
+#header.slim-mode #toggle-header {
+    top: 6px;
 }
 
 .toggle-btn:hover {
@@ -145,6 +166,44 @@ header {
 #brand-link:hover {
     color: #0969da;
     text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+/* 브랜드명 슬림 모드 수평 중간 이동 및 상하 배치 로직 */
+.brand-box {
+    transition: all 0.3s ease;
+}
+
+/* 슬림 모드 시 브랜드명을 수평 중간으로 이동 */
+#header.slim-mode .brand-box {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* 정확한 수평 중간 정렬 보정 */
+    z-index: 5;
+}
+
+/* 시각적 2단 구분선: 확장 모드에서 브랜드명(상단)과 하단 요소 사이의 경계 표현 */
+.section-left::after {
+    content: "";
+    position: absolute;
+    top: 52px;                 /* 확장 모드 시 구분선이 그려질 높이 */
+    left: 0;
+    width: 100vw;              /* 화면 전체 너비를 가로지르는 구분선 */
+    border-bottom: 1px solid #f0f0f0;
+    pointer-events: none;      /* 구분선이 마우스 클릭을 방해하지 않도록 설정 */
+    display: block;
+}
+
+/* 슬림 모드 시 시각적 구분선 제거 */
+#header.slim-mode .section-left::after {
+    display: none;
 }
 
 
