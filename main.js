@@ -364,11 +364,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }).join(''));
 
             /**
-             * [안내] 현재 별도의 마크다운 파서(marked.js 등)가 연결되지 않은 상태이므로,
-             * 원문의 줄바꿈과 구조를 보존하기 위해 <pre> 태그 내에 텍스트를 삽입함.
-             * 추후 파서 도입 시 이 부분을 marked.parse(decodedContent)로 대체 가능함.
+             * marked.js 라이브러리를 사용하여 디코딩된 마크다운 원문을 HTML로 변환함.
+             * 이를 통해 제목, 목록, 강조 등 마크다운 문법이 시각적으로 완벽하게 렌더링됨.
              */
-            articleArea.innerHTML = `<pre style="white-space: pre-wrap; word-break: break-all; font-family: inherit; line-height: 1.6;">${decodedContent}</pre>`;
+            articleArea.innerHTML = marked.parse(decodedContent);
 
             // 새로운 내용을 불러온 후 스크롤 위치를 본문 최상단으로 초기화
             articleArea.scrollTop = 0;
