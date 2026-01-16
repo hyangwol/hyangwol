@@ -213,11 +213,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.style.marginBottom = "8px";
 
                 const link = document.createElement('a');
-                link.href = file.path; // API에서 제공하는 파일의 상대 경로를 연결합니다.
+                link.href = '#'; // 기본 링크 이동을 방지하기 위해 '#'으로 설정합니다.
                 link.textContent = file.name.replace('.md', ''); // 사용자에게 보여줄 때 확장자는 제거합니다.
                 link.style.textDecoration = "none";
                 link.style.color = "#333";
                 link.style.fontSize = "0.9em";
+                link.style.cursor = "pointer";
+
+                /**
+                 * 파일명을 클릭했을 때 기본 동작(페이지 이동)을 차단하고, 
+                 * 해당 파일의 경로(path)를 인자로 전달하여 본문 내용을 비동기로 호출함.
+                 */
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    loadPostContent(file.path);
+                };
 
                 li.appendChild(link);
                 ul.appendChild(li);
@@ -328,5 +338,44 @@ document.addEventListener('DOMContentLoaded', () => {
             return Math.round(255 * color).toString(16).padStart(2, '0');
         };
         return `#${f(0)}${f(8)}${f(4)}`;
+    }
+
+    /**
+     * 선택된 파일의 경로를 통해 GitHub API에서 원문 내용을 가져와 아티클 영역에 출력함.
+     * GitHub API가 반환하는 Base64 데이터를 UTF-8 문자열로 안전하게 디코딩하여 한글 깨짐을 방지함.
+     * @param {string} path - GitHub 저장소 내 파일 경로
+     */
+    async function loadPostContent(path) {
+        const articleArea = document.getElementById('article');
+        if (!articleArea) return;
+
+        try {
+            // 사용자에게 데이터를 불러오고 있음을 알리는 시각적 피드백 제공
+            articleArea.innerHTML = '<p style="color: #666;">내용(內容)을 읽어오는 중입니다...</p>';
+
+            const response = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`);
+            if (!response.ok) throw new Error("파일을 불러오는 데 실패했습니다.");
+
+            const data = await response.json();
+
+            // GitHub API의 Base64 데이터를 UTF-8로 안전하게 디코딩 (한글 보존 로직)
+            const decodedContent = decodeURIComponent(atob(data.content).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            /**
+             * [안내] 현재 별도의 마크다운 파서(marked.js 등)가 연결되지 않은 상태이므로,
+             * 원문의 줄바꿈과 구조를 보존하기 위해 <pre> 태그 내에 텍스트를 삽입함.
+             * 추후 파서 도입 시 이 부분을 marked.parse(decodedContent)로 대체 가능함.
+             */
+            articleArea.innerHTML = `<pre style="white-space: pre-wrap; word-break: break-all; font-family: inherit; line-height: 1.6;">${decodedContent}</pre>`;
+
+            // 새로운 내용을 불러온 후 스크롤 위치를 본문 최상단으로 초기화
+            articleArea.scrollTop = 0;
+
+        } catch (error) {
+            console.error("콘텐츠 로드 실패:", error);
+            articleArea.innerHTML = '<p style="color: red;">내용을 불러오는 중 오류(誤謬)가 발생했습니다.</p>';
+        }
     }
 });
