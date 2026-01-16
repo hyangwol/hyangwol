@@ -351,10 +351,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 사용자에게 데이터를 불러오고 있음을 알리는 시각적 피드백 제공
-            articleArea.innerHTML = '<p style="color: #666;">내용(內容)을 읽어오는 중입니다...</p>';
+            articleArea.innerHTML = '<p style="color: #666;">내용內容을 읽어오는 중中입니다...</p>';
 
             const response = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`);
-            if (!response.ok) throw new Error("파일을 불러오는 데 실패했습니다.");
+            if (!response.ok) throw new Error("파일file을 불러오는 데 실패失敗했습니다.");
 
             const data = await response.json();
 
@@ -374,8 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
             articleArea.scrollTop = 0;
 
         } catch (error) {
-            console.error("콘텐츠 로드 실패:", error);
-            articleArea.innerHTML = '<p style="color: red;">내용을 불러오는 중 오류(誤謬)가 발생했습니다.</p>';
+            console.error("콘텐츠content 로드load 실패失敗:", error);
+            articleArea.innerHTML = '<p style="color: red;">내용內容을 불러오는 중中 오류誤謬가 발생發生했습니다.</p>';
         }
     }
 });
