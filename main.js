@@ -2,28 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     // --- 설정 정보 (달내의 환경에 맞게 수정 필요) ---
     // GitHub API 호출을 위한 기본 정보와 메뉴 구성을 위한 폴더 목록을 정의합니다.
     const GITHUB_USER = "hyangwol"; // 사용자 계정명
@@ -41,18 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnR2 = document.getElementById('toggle-sidebar-r2');
     const header = document.getElementById('header');          // 두대신축 기능을 위한 헤더 참조
     const btnHeader = document.getElementById('toggle-header'); // 두대신축 버튼 참조
-
-
-
-    
-
-
-
-
-
-
-
-
 
     /**
      * GitHub API를 호출하여 특정 경로의 콘텐츠 목록을 가져오는 비동기 함수
@@ -76,35 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-
-
-
-
-
-
-
-    
-
-
-    
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
     // 앵커 링크 로직
     const anchorLinks = document.querySelectorAll('.anchor-link');
 
@@ -114,43 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Anchor clicked: ${link.getAttribute('href')}`);
         });
     });
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // 사이드바(sidebar) 토글(toggle) 로직(logic)
     if (btnL1 && sidebarL1) btnL1.addEventListener('click', () => sidebarL1.classList.toggle('active'));
     if (btnL2 && sidebarL2) btnL2.addEventListener('click', () => sidebarL2.classList.toggle('active'));
     if (btnR2 && sidebarR) btnR2.addEventListener('click', () => sidebarR.classList.toggle('active'));
-
-
-
-
-
-
-
-
 
     // 두대신축(頭帶伸縮) 헤더 슬림 모드 토글 로직
     // 두대신축(頭帶伸縮) 버튼 클릭 시 헤더의 슬림 모드(slim-mode)를 토글함
@@ -159,22 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
             header.classList.toggle('slim-mode');
         });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // 키보드keyboard 단축短縮키key 로직logic
     document.addEventListener('keydown', (e) => {
@@ -208,55 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // 저작권 연도 자동 갱신 (안전하게 DOM 로드 후 실행)
     const yearElement = document.getElementById("current-year");
     if (yearElement) {
         yearElement.textContent = new Date().getFullYear();            // 시스템의 현재 연도를 'current-year' 아이디를 가진 요소에 출력
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * 헤더 중앙에 폴더별 메뉴 버튼을 동적으로 생성하는 함수 
@@ -340,11 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
-
-
-
-
     /**
      * 받아온 파일 목록 데이터를 L1 사이드바에 리스트 형태로 그리는 함수
      * @param {Array} files - GitHub API로부터 받은 파일 정보 객체 배열
@@ -380,34 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 페이지 로드 시 위에서 정의한 메뉴 초기화 로직을 즉시 실행합니다.
     initializeHeaderMenu();
-
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
 
     // 다섯 개의 토글버튼 위에 마우스를 올렸을 때 툴팁 띄우는 기능.
     const tooltip = document.getElementById('custom-tooltip');
@@ -453,15 +266,4 @@ document.addEventListener('DOMContentLoaded', () => {
             tooltip.style.display = 'none';
         });
     });
-
-
-
-
-    
-
-
-
 });
-
-
-
