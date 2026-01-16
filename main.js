@@ -148,6 +148,14 @@ document.addEventListener('DOMContentLoaded', () => {
             menuBtn.className = 'menu-item';
             menuBtn.textContent = folder.name;  // folder1, folder2 등이 버튼명이 됩니다.
 
+            /**
+             * 각 메뉴 버튼이 생성될 때마다 기준 색상(#ebf2ff)의 채도 비율을 계승한
+             * 무작위 색상을 추출하여 버튼의 배경색(backgroundColor)으로 지정함.
+             * 이를 통해 메뉴 로드 시마다 다채롭고 조화로운 파스텔톤 시각 효과를 제공함.
+             */
+            const randomBtnColor = getRandomColorBySaturationRatio('#ebf2ff');
+            menuBtn.style.backgroundColor = randomBtnColor;
+
             // 버튼 클릭 시 해당 하위 폴더의 파일 목록을 호출합니다.
             // 클릭 이벤트: 파일 목록 렌더링 및 L1 사이드바 활성화
             // 클릭 이벤트 등록
