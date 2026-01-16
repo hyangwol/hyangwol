@@ -266,4 +266,59 @@ document.addEventListener('DOMContentLoaded', () => {
             tooltip.style.display = 'none';
         });
     });
+
+    /**
+     * 특정 색상(色彩)의 채도(彩度) 수치(數値)를 기준(基準)으로 지정된 비율(比率) 범위(範圍) 내에서 색상(色相)을 무작위(無作爲) 추출(抽出)하는 함수(函數)
+     * 입력(入力)받은 Hex 코드code의 채도(彩度)에 ±11%의 상대적(相對的) 편차(偏差)를 적용(適用)하여 원본(原本)의 선명도(鮮明度)를 유지(維持)하거나 변주(變奏)함.
+     * @param {string} hex - 기준(基準)이 되는 십육진법(十六進法) 컬러color 코드code
+     * @returns {string} - 원본(原本) 채도(彩度) 비율(比率)이 반영(反映)되어 생성(生成)된 무작위(無作爲) Hex 코드code
+     */
+    function getRandomColorBySaturationRatio(hex) {
+        // 십육진법(十六進法)을 RGB 수치(數値)로 분해(分解) 및 정규화(正規化)
+        let r = parseInt(hex.slice(1, 3), 16) / 255;
+        let g = parseInt(hex.slice(3, 5), 16) / 255;
+        let b = parseInt(hex.slice(5, 7), 16) / 255;
+
+        // RGB를 HSL 모델model로 변환(變換)하여 원본(原本) 채도(彩度)와 명도(明度) 확보(確保)
+        let max = Math.max(r, g, b), min = Math.min(r, g, b);
+        let s, l = (max + min) / 2;
+
+        if (max === min) {
+            s = 0; // 무채색(無彩色)인 경우(境遇)
+        } else {
+            let d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        }
+
+        // 색상(色相, Hue)은 0~360도(度) 범위(範圍)에서 무작위(無作爲) 추출(抽出)
+        const randomHue = Math.floor(Math.random() * 361);
+
+        // 채도(彩度, Saturation)에 기준(基準) 채도(彩度) 대비(對比) ±11%의 상대적(相對적) 비율(比率) 편차(偏差) 적용(適用)
+        const ratio = 0.89 + (Math.random() * (1.11 - 0.89));
+        let newSaturation = Math.min(1, s * ratio); // 물리적(物理的) 한계치(限界値) 100% 초과(超過) 방지(防止)
+
+        // 명도(明度, Lightness)는 원본(原本) 색상(色彩)의 수치(數値)를 그대로 유지(維持)하여 시각적(視覺的) 일관성(一貫性) 확보(確保)
+        const fixedLightness = l;
+
+        // 최종(最終) 계산(計算)된 HSL 값을 다시 Hex 코드code로 변환(變換)하여 반환(返還)
+        return hslToHex(randomHue, newSaturation * 100, fixedLightness * 100);
+    }
+
+    /**
+     * HSL(색상, 채도, 명도) 수치(數値)를 표준(標準) Hex 컬러color 코드code로 변환(變換)하는 보조(補助) 함수(函數)
+     * @param {number} h - 색상(色相) (0-360)
+     * @param {number} s - 채도(彩도) (0-100)
+     * @param {number} l - 명도(明度) (0-100)
+     * @returns {string} - 변환(變換)된 Hex 문자열(文字列)
+     */
+    function hslToHex(h, s, l) {
+        l /= 100;
+        const a = s * Math.min(l, 1 - l) / 100;
+        const f = n => {
+            const k = (n + h / 30) % 12;
+            const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+            return Math.round(255 * color).toString(16).padStart(2, '0');
+        };
+        return `#${f(0)}${f(8)}${f(4)}`;
+    }
 });
