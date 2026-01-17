@@ -291,6 +291,9 @@ body {
     color: #24292f; 
     word-wrap: break-word; /* 긴 단어가 영역을 벗어나지 않도록 방지 */
 }
+#article p { 
+    text-indent: 1em; /* 문단의 첫 글자를 한 글자 크기만큼 들여쓰기.(한국식 원고양식.) */
+}
 
 /* 굵은 글씨 강조 스타일 */
 #article strong { 
