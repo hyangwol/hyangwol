@@ -291,8 +291,14 @@ body {
     color: #24292f; 
     word-wrap: break-word; /* 긴 단어가 영역을 벗어나지 않도록 방지 */
 }
-#article p { 
-    text-indent: 1em; /* 문단의 첫 글자를 한 글자 크기만큼 들여쓰기.(한국식 원고양식.) */
+
+/* 문단의 첫 글자를 한 글자 크기만큼 들여쓰기.*/
+#article p { text-indent: 1em; }  /* 기본적으로 모든 문단 들여쓰기 */
+
+/* 제목(h1~h6) 바로 뒤에 오는 첫 번째 문단만 들여쓰기 취소 */
+#article h1 + p, #article h2 + p, #article h3 + p, 
+#article h4 + p, #article h5 + p, #article h6 + p {
+    text-indent: 0;
 }
 
 /* 굵은 글씨 강조 스타일 */
