@@ -402,12 +402,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const articleArea = document.getElementById('article');
         if (!articleArea) return;
 
-        // 아티클 영역 내의 h1, h2, h3 요소만 추출
-        const headings = articleArea.querySelectorAll('h1, h2, h3');
+        /**
+         * 문서의 전체 구조를 상세히 파악할 수 있도록 
+         * 최상위 제목(h1)부터 최하위 세부 제목(h6)까지 모두 탐색하여 목차에 포함함.
+         */
+        const headings = articleArea.querySelectorAll('h1, h2, h3, h4, h5, h6');
         if (headings.length === 0) return;
 
         const tocContainer = document.createElement('div');
-        tocContainer.style.padding = "20px 15px";
+        /**
+         * h6까지의 깊은 계층 구조(최대 60px 이상의 들여쓰기)를 고려하여 
+         * 좌우 여백을 충분히 확보하고 가이드라인의 시각적 연속성을 보장함.
+         */
+        tocContainer.style.padding = "20px 20px 20px 15px";
         /**
          * 목차의 계층 구조를 시각적으로 분별하기 위해 배경에 가느다란 수직 안내선을 배치함.
          * 12px(들여쓰기 단위) 간격으로 점선이 반복되도록 설정하여 코드 에디터와 유사한 환경을 제공함.
