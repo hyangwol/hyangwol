@@ -256,14 +256,15 @@ body {
 
 /* --- 문서 내 여백餘白 정책 --- */
 /* 아티클 내부의 제목(h1~h6)과 문단(p) 뒤에 일관된 여백을 부여하여 가독성 확보 */
-#article h1 { margin-top: 0; margin-bottom: 3em; }
-#article h2 { margin-top: 0; margin-bottom: 2.5em; }
-#article h3 { margin-top: 0; margin-bottom: 2em; }
-#article h4 { margin-top: 0; margin-bottom: 1.7em; }
-#article h5 { margin-top: 0; margin-bottom: 1.5em; }
-#article h6 { margin-top: 0; margin-bottom: 1.3em; }
-#article p  { margin-top: 0; margin-bottom: 0.5em; }
-#article ul, #article ol { margin-top: 0; margin-bottom: 0.2em; }
+/* margin: [상하수치] [좌우수치]; 순서로 기입함 */
+#article h1 { margin: 3em 0; }
+#article h2 { margin: 2.5em 0; }
+#article h3 { margin: 2em 0; }
+#article h4 { margin: 1.7em 0; }
+#article h5 { margin: 1.5em 0; }
+#article h6 { margin: 1.3em 0; }
+#article p  { margin: 0.5em 0; }
+#article ul, #article ol { margin: 0.2em 0; }
 
 /* 마지막 요소 아래에는 불필요한 여백이 생기지 않도록 처리 */
 /* "글이 끝나는 지점地點이 곧 아티클article 영역領域의 바닥이어야 한다"는 선언宣言 */
