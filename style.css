@@ -254,6 +254,24 @@ body {
     overflow-y: auto; /* 본문이 길어지면 아티클 영역만 스크롤 */
 }
 
+/* --- 문서 내 여백餘白 정책 --- */
+/* 아티클 내부의 제목(h1~h6)과 문단(p) 뒤에 일관된 여백을 부여하여 가독성 확보 */
+#article h1 { margin-top: 0; margin-bottom: 3em; }
+#article h2 { margin-top: 0; margin-bottom: 2.5em; }
+#article h3 { margin-top: 0; margin-bottom: 2em; }
+#article h4 { margin-top: 0; margin-bottom: 1.7em; }
+#article h5 { margin-top: 0; margin-bottom: 1.5em; }
+#article h6 { margin-top: 0; margin-bottom: 1.3em; }
+#article p  { margin-top: 0; margin-bottom: 0.5em; }
+#article ul, #article ol { margin-top: 0; margin-bottom: 0.2em; }
+
+/* 마지막 요소 아래에는 불필요한 여백이 생기지 않도록 처리 */
+/* "글이 끝나는 지점地點이 곧 아티클article 영역領域의 바닥이어야 한다"는 선언宣言 */
+/* 마지막에 여백餘白이 남아 있으면, 실제實際 내용은 끝났는데도 아래로 더 스크롤scroll이 되는 듯한 답답함을 줄 수 있음. */
+#article > *:last-child {
+    margin-bottom: 0;
+}
+
 /* 헤더header 중앙中央 메뉴menu 영역領域의 버튼button 배치配置 설정設定 */
 /* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域)의 3층 벽돌 적재 설정 */
 /* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域): 3개의 층(row)을 수직으로 쌓는 컨테이너 */
