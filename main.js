@@ -369,12 +369,67 @@ document.addEventListener('DOMContentLoaded', () => {
              */
             articleArea.innerHTML = marked.parse(decodedContent);
 
-            // 새로운 내용을 불러온 후 스크롤 위치를 본문 최상단으로 초기화
-            articleArea.scrollTop = 0;
+             // 새로운 내용을 불러온 후 스크롤 위치를 본문 최상단으로 초기화
+             articleArea.scrollTop = 0;
+
+            // 본문 렌더링 완료 후 L2 사이드바에 목차(TOC) 생성
+            renderTableOfContents();
 
         } catch (error) {
             console.error("콘텐츠content 로드load 실패失敗:", error);
             articleArea.innerHTML = '<p style="color: red;">내용內容을 불러오는 중中 오류誤謬가 발생發生했습니다.</p>';
         }
+    }
+
+    /**
+     * 본문(article) 내의 제목 요소들을 분석하여 L2 사이드바에 목차(TOC)를 동적으로 생성하는 함수
+     * h1, h2, h3 태그를 탐색하여 위계별로 들여쓰기가 적용된 링크 리스트를 구성함
+     */
+    function renderTableOfContents() {
+        if (!sidebarL2) return;
+
+        // 기존 목차 내용 초기화
+        sidebarL2.innerHTML = "";
+        const articleArea = document.getElementById('article');
+        if (!articleArea) return;
+
+        // 아티클 영역 내의 h1, h2, h3 요소만 추출
+        const headings = articleArea.querySelectorAll('h1, h2, h3');
+        if (headings.length === 0) return;
+
+        const tocContainer = document.createElement('div');
+        tocContainer.style.padding = "20px 15px";
+
+        headings.forEach((heading) => {
+            // 제목 텍스트에서 클립링크 등 자식 요소 제외하고 순수 텍스트만 추출
+            const titleText = heading.childNodes[0]?.textContent?.trim() || heading.textContent.trim();
+            const id = heading.id;
+
+            if (id) {
+                const link = document.createElement('a');
+                link.href = `#${id}`;
+                link.textContent = titleText;
+                link.style.display = "block";
+                link.style.textDecoration = "none";
+                link.style.color = "#555";
+                link.style.fontSize = "0.85em";
+                link.style.marginBottom = "6px";
+                link.style.lineHeight = "1.4";
+
+                // 제목 위계(h1~h3)에 따른 좌측 들여쓰기 차등 적용
+                const level = parseInt(heading.tagName.substring(1));
+                link.style.paddingLeft = `${(level - 1) * 12}px`;
+
+                // 목차 항목 클릭 시 해당 위치로 부드럽게 이동하도록 설정
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    heading.scrollIntoView({ behavior: 'smooth' });
+                };
+
+                tocContainer.appendChild(link);
+            }
+        });
+
+        sidebarL2.appendChild(tocContainer);
     }
 });

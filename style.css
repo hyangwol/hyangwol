@@ -425,3 +425,9 @@ footer {
     white-space: pre-line; /* 줄바꿈 문자(\n 또는 &#10;)를 만나면 줄을 바꿈 */
     word-break: break-all; /* 너무 긴 단어도 상자 밖으로 나가지 않게 함 */
 }
+
+/* L2 사이드바 내 목차(TOC) 링크 호버 스타일 */
+#sidebar-left-2 a:hover {
+    color: #0969da !important;
+    text-decoration: underline !important;
+}
