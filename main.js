@@ -408,6 +408,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const tocContainer = document.createElement('div');
         tocContainer.style.padding = "20px 15px";
+        /**
+         * 목차의 계층 구조를 시각적으로 분별하기 위해 배경에 가느다란 수직 안내선을 배치함.
+         * 12px(들여쓰기 단위) 간격으로 점선이 반복되도록 설정하여 코드 에디터와 유사한 환경을 제공함.
+         */
+        tocContainer.style.backgroundImage = "linear-gradient(to right, #eee 1px, transparent 1px)";
+        tocContainer.style.backgroundSize = "12px 100%";
+        tocContainer.style.backgroundRepeat = "repeat-x";
 
         headings.forEach((heading, index) => {
             // 제목 텍스트에서 클립링크 등 자식 요소 제외하고 순수 텍스트만 추출
@@ -429,6 +436,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 link.style.fontSize = "0.85em";
                 link.style.marginBottom = "6px";
                 link.style.lineHeight = "1.4";
+                /**
+                 * 안내선이 텍스트 아래에 겹쳐 가독성을 해치지 않도록 
+                 * 링크 항목 자체에 배경색을 부여하여 선을 가려주는 마스킹 효과를 적용함.
+                 */
+                link.style.backgroundColor = "#fff";
+                link.style.position = "relative";
 
                 // 제목 위계(h1~h3)에 따른 좌측 들여쓰기 차등 적용
                 const level = parseInt(heading.tagName.substring(1));
