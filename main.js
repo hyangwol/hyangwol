@@ -1,6 +1,11 @@
 /* main.js: 동적 상호작용과 로직을 담당하는 독립된 문서 */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    /**
+     * 페이지 로드 시 최상위 레이아웃인 헤더의 정렬을 완결한 후 
+     * 하위 콘텐츠 및 사이드바 로직을 순차적으로 실행하여 
+     * 렌더링 간섭으로 인한 레이아웃 붕괴를 원천적으로 방지함.
+     */
 
     // --- 설정 정보 (달내의 환경에 맞게 수정 필요) ---
     // GitHub API 호출을 위한 기본 정보와 메뉴 구성을 위한 폴더 목록을 정의합니다.
@@ -51,19 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Anchor clicked: ${link.getAttribute('href')}`);
         });
     });
-
-    // 사이드바(sidebar) 토글(toggle) 로직(logic)
-    if (btnL1 && sidebarL1) btnL1.addEventListener('click', () => sidebarL1.classList.toggle('active'));
-    if (btnL2 && sidebarL2) btnL2.addEventListener('click', () => sidebarL2.classList.toggle('active'));
-    if (btnR2 && sidebarR) btnR2.addEventListener('click', () => sidebarR.classList.toggle('active'));
-
-    // 두대신축(頭帶伸縮) 헤더 슬림 모드 토글 로직
-    // 두대신축(頭帶伸縮) 버튼 클릭 시 헤더의 슬림 모드(slim-mode)를 토글함
-    if (btnHeader && header) {
-        btnHeader.addEventListener('click', () => {
-            header.classList.toggle('slim-mode');
-        });
-    }
 
     // 키보드keyboard 단축短縮키key 로직logic
     document.addEventListener('keydown', (e) => {
@@ -237,8 +229,25 @@ document.addEventListener('DOMContentLoaded', () => {
         sidebarL1.appendChild(ul);
     }
 
-    // 페이지 로드 시 위에서 정의한 메뉴 초기화 로직을 즉시 실행합니다.
-    initializeHeaderMenu();
+    // 헤더 메뉴의 물리적 정렬과 3층 적재가 완료될 때까지 대기하여 레이아웃 안정성을 확보함.
+    await initializeHeaderMenu();
+
+        /**
+     * 상위 레이아웃(Header)이 확정된 시점에 개별 토글 버튼의 이벤트를 등록함.
+     * 이는 초기 렌더링 시점에 발생할 수 있는 불필요한 레이아웃 재계산을 방지함.
+     */
+    // 사이드바(sidebar) 토글(toggle) 로직(logic)
+    if (btnL1 && sidebarL1) btnL1.addEventListener('click', () => sidebarL1.classList.toggle('active'));
+    if (btnL2 && sidebarL2) btnL2.addEventListener('click', () => sidebarL2.classList.toggle('active'));
+    if (btnR2 && sidebarR) btnR2.addEventListener('click', () => sidebarR.classList.toggle('active'));
+
+    // 두대신축(頭帶伸縮) 헤더 슬림 모드 토글 로직
+    // 두대신축(頭帶伸縮) 버튼 클릭 시 헤더의 슬림 모드(slim-mode)를 토글함
+    if (btnHeader && header) {
+        btnHeader.addEventListener('click', () => {
+            header.classList.toggle('slim-mode');
+        });
+    }
 
     // 다섯 개의 토글버튼 위에 마우스를 올렸을 때 툴팁 띄우는 기능.
     const tooltip = document.getElementById('custom-tooltip');
@@ -400,13 +409,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const tocContainer = document.createElement('div');
         tocContainer.style.padding = "20px 15px";
 
-        headings.forEach((heading) => {
+        headings.forEach((heading, index) => {
             // 제목 텍스트에서 클립링크 등 자식 요소 제외하고 순수 텍스트만 추출
             const titleText = heading.childNodes[0]?.textContent?.trim() || heading.textContent.trim();
+            
+            // 제목에 id가 없는 경우 목차 연결을 위해 임시 식별자를 자동 부여함
+            if (!heading.id) {
+                heading.id = `toc-heading-${index}`;
+            }
             const id = heading.id;
 
-            if (id) {
-                const link = document.createElement('a');
+            // 식별자(id)가 확보되었으므로 목차 항목(link) 생성
+            const link = document.createElement('a');
                 link.href = `#${id}`;
                 link.textContent = titleText;
                 link.style.display = "block";
@@ -428,8 +442,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 tocContainer.appendChild(link);
             }
-        });
+        );
 
         sidebarL2.appendChild(tocContainer);
+
+        /**
+         * 본문 렌더링 직후 사이드바가 즉시 열릴 경우 발생하는 브라우저의 연산 부하를 
+         * 분산시키기 위해 한 프레임의 가용 시간을 확보한 후 사이드바를 활성화함.
+         */
+        if (headings.length > 0) {
+            setTimeout(() => {
+                if (!sidebarL2.classList.contains('active')) {
+                    sidebarL2.classList.add('active');
+                }
+            }, 1);
+        }
     }
 });
