@@ -273,6 +273,30 @@ body {
     margin-bottom: 0;
 }
 
+/* --- 문서 내 글자 크기·굵기 정책 --- */
+/* 위계별로 글자 크기와 굵기를 차등 적용하여 논리적 구조를 시각화함 */
+#article h1 { font-size: 2.3em;   font-weight: 800; color: #24292f; }
+#article h2 { font-size: 2em;  font-weight: 700; color: #24292f; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+#article h3 { font-size: 1.7em;   font-weight: 600; color: #24292f; }
+#article h4 { font-size: 1.5em;  font-weight: 500; color: #24292f; }
+#article h5 { font-size: 1.3em;     font-weight: 500; color: #24292f; }
+#article h6 { font-size: 1.11em;  font-weight: 500; color: #24292f; }
+/* 수치의 작동作動 : CSS에서 `font-weight`는 1부터 1000까지 기술記述할 수 있지만 실제實際로는 설치設置된 폰트font 파일file이 지원支援하는 굵기(보통 100 단위單位로 끊어짐: 400, 500, 600, 700, 800)로 가장 가까운 값을 찾아 매칭matching된다고 함. */
+
+/* 일반본문글씨 크기·두께 설정 */
+#article p, #article ul, #article ol { 
+    font-size: 1rem; 
+    font-weight: 400; /* 브라우저 기본값. 본문 본연의 단정하고 가독성 높은 두께. 인쇄물印刷物과 웹web에서 검증檢證된 가장 편안便安한 수치. */
+    color: #24292f; 
+    word-wrap: break-word; /* 긴 단어가 영역을 벗어나지 않도록 방지 */
+}
+
+/* 굵은 글씨 강조 스타일 */
+#article strong { 
+    font-weight: bolder; /* 부모(h1~h6, p)의 두께보다 한 단계 더 굵게 자동 조절 */
+    color: #000;         /* 색상은 선명한 검정으로 강조 */
+}
+
 /* 헤더header 중앙中央 메뉴menu 영역領域의 버튼button 배치配置 설정設定 */
 /* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域)의 3층 벽돌 적재 설정 */
 /* 헤더(header) 중앙(中央) 메뉴(menu) 영역(領域): 3개의 층(row)을 수직으로 쌓는 컨테이너 */
