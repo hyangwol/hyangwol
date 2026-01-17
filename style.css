@@ -277,6 +277,7 @@ body {
 /* 위계별로 글자 크기와 굵기를 차등 적용하여 논리적 구조를 시각화함 */
 #article h1 { font-size: 2.3em;   font-weight: 800; color: #24292f; }
 #article h2 { font-size: 2em;  font-weight: 700; color: #24292f; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+/*" `h2` 하단下段 구분선區分線 : 큰 주제主題를 다루는 `h2`에는 옅은 가로선線을 추가追加하여 시각적視覺的인 단락段落 구분區分을 명확明確히 했습니다. 이는 깃허브github 스타일style의 세련洗練됨을 차용한 것입니다."*/
 #article h3 { font-size: 1.7em;   font-weight: 600; color: #24292f; }
 #article h4 { font-size: 1.5em;  font-weight: 500; color: #24292f; }
 #article h5 { font-size: 1.3em;     font-weight: 500; color: #24292f; }
