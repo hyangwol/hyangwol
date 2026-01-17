@@ -400,18 +400,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const tocContainer = document.createElement('div');
         tocContainer.style.padding = "20px 15px";
 
-        headings.forEach((heading, index) => {
+        headings.forEach((heading) => {
             // 제목 텍스트에서 클립링크 등 자식 요소 제외하고 순수 텍스트만 추출
             const titleText = heading.childNodes[0]?.textContent?.trim() || heading.textContent.trim();
-            
-            // 제목에 id가 없는 경우 목차 연결을 위해 임시 식별자를 자동 부여함
-            if (!heading.id) {
-                heading.id = `toc-heading-${index}`;
-            }
             const id = heading.id;
 
-            // 식별자(id)가 확보되었으므로 목차 항목(link) 생성
-            const link = document.createElement('a');
+            if (id) {
+                const link = document.createElement('a');
                 link.href = `#${id}`;
                 link.textContent = titleText;
                 link.style.display = "block";
@@ -436,10 +431,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         sidebarL2.appendChild(tocContainer);
-
-        // 목차 생성 완료 후, 내용이 있다면 L2 사이드바를 자동으로 펼침
-        if (headings.length > 0 && !sidebarL2.classList.contains('active')) {
-            sidebarL2.classList.add('active');
-        }
     }
 });
