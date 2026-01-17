@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', async () => {
          * 목차의 계층 구조를 시각적으로 분별하기 위해 배경에 가느다란 수직 안내선을 배치함.
          * 12px(들여쓰기 단위) 간격으로 점선이 반복되도록 설정하여 코드 에디터와 유사한 환경을 제공함.
          */
-        tocContainer.style.backgroundImage = "linear-gradient(to right, #eee 1px, transparent 1px)";
+        tocContainer.style.backgroundImage = "linear-gradient(to right, #e3c0ff 1.7px, transparent 1px)";
         tocContainer.style.backgroundSize = "12px 100%";
         tocContainer.style.backgroundRepeat = "repeat-x";
 
