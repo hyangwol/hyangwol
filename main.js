@@ -440,8 +440,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             link.style.textDecoration = "none";
             link.style.color = "#555";
             link.style.fontSize = "0.85em";
-            link.style.marginBottom = "6px";
-            link.style.lineHeight = "1.4";
+            /**
+             * 코드 에디터와 유사한 조밀한 가독성을 위해 하단 여백을 제거하고 줄 높이를 최적화함.
+             * 배경색 마스킹이 상하로 미세하게 겹쳐 안내선이 끊김 없이 이어지도록 조정함.
+             */
+            link.style.marginBottom = "0";
+            link.style.lineHeight = "1.2";
 
             /**
              * 안내선이 텍스트 아래에 겹쳐 가독성을 해치지 않도록 
@@ -476,8 +480,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             /**
              * inline-block 요소인 링크가 가로로 나열되는 것을 방지하고 
              * 개별 항목이 독립된 행을 점유하도록 블록 레벨 컨테이너로 감싸 구성함.
+             * 개별 항목을 감싸는 컨테이너의 불필요한 여백을 제거하여 행간을 최소화함.
+             * 이를 통해 목차 전체의 시각적 밀도를 높이고 계층 구조 파악을 용이케 함.
              */
             const itemWrapper = document.createElement('div');
+            itemWrapper.style.margin = "0";
+            itemWrapper.style.padding = "0";
+            itemWrapper.style.lineHeight = "0"; // wrapper로 인한 추가 간격 발생 방지
+            
             itemWrapper.appendChild(link);
             tocContainer.appendChild(itemWrapper);
         });
