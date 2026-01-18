@@ -426,8 +426,13 @@ document.addEventListener('DOMContentLoaded', async () => {
          * 12px(들여쓰기 단위) 간격으로 점선이 반복되도록 설정하여 코드 에디터와 유사한 환경을 제공함.
          */
         tocContainer.style.backgroundImage = "linear-gradient(to right, #e3c0ff 1px, transparent 1px)";
-        tocContainer.style.backgroundSize = "12px 100%";
-        tocContainer.style.backgroundRepeat = "repeat-x";
+        /**
+         * 안내선을 왼쪽에서부터 정확히 6개까지만 노출함.
+         * 각 안내선 간격이 12px이므로, 전체 배경 너비를 12px * 6 = 72px로 제한함.
+         * backgroundRepeat를 'no-repeat'로 설정하여 72px 이후에는 선이 나타나지 않게 함.
+         */
+        tocContainer.style.backgroundSize = "72px 100%";
+        tocContainer.style.backgroundRepeat = "no-repeat";
 
         headings.forEach((heading, index) => {
             // 제목 텍스트에서 클립링크 등 자식 요소 제외하고 순수 텍스트만 추출
