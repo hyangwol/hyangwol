@@ -379,13 +379,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             }).join(''));
 
             /**
-             * marked.js 라이브러리를 사용하여 디코딩된 마크다운 원문을 HTML로 변환함.
-             * 이를 통해 제목, 목록, 강조 등 마크다운 문법이 시각적으로 완벽하게 렌더링됨.
+             * marked.js 라이브러리library를 사용사용하여 디코딩decoding된 마크다운markdown 원문原文을 HTML로 변환變換함.
+             * 이를 통해 제목題目, 목록目錄, 강조强調 등 마크다운markdown 문법文法이 시각적視覺的으로 완벽完璧히 렌더링rendering됨.
              */
             articleArea.innerHTML = marked.parse(decodedContent);
 
-             // 새로운 내용을 불러온 후 스크롤 위치를 본문 최상단으로 초기화
-             articleArea.scrollTop = 0;
+            /**
+             * 아티클article 영역領域의 최상단最上端에 위치位置한 제목題目(h1~h6) 요소要素의 상단上端 패딩padding을 제거除去함.
+             * 이는 제목題目이 본문本文 시작始作 지점地點에서 불필요不必要한 여백餘白 없이 상단上단 경계境界에 밀착密着되도록 하기 위함임.
+             */
+            const firstHeading = articleArea.querySelector('h1, h2, h3, h4, h5, h6');
+            if (firstHeading && firstHeading === articleArea.firstElementChild) {
+                firstHeading.style.paddingTop = "0";
+                firstHeading.style.marginTop = "0";
+            }
+
+            // 새로운 내용內容을 불러온 후後 스크롤scroll 위치位置를 본문本文 최상단最上端으로 초기화初期化
+            articleArea.scrollTop = 0;
 
             // 본문 렌더링 완료 후 L2 사이드바에 목차(TOC) 생성
             renderTableOfContents();
