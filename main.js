@@ -417,10 +417,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const tocContainer = document.createElement('div');
         /**
-         * h6까지의 깊은 계층 구조(최대 60px 이상의 들여쓰기)를 고려하여 
-         * 좌우 여백을 충분히 확보하고 가이드라인의 시각적 연속성을 보장함.
+         * 1위계 제목이 첫 번째 안내선과 일치하도록 좌측 패딩을 제거함.
+         * 전체적인 시각적 밀도를 높이기 위해 상하좌우 여백을 최소화함.
          */
-        tocContainer.style.padding = "20px 20px 20px 15px";
+        tocContainer.style.padding = "10px 2px 10px 0";
         /**
          * 목차의 계층 구조를 시각적으로 분별하기 위해 배경에 가느다란 수직 안내선을 배치함.
          * 12px(들여쓰기 단위) 간격으로 점선이 반복되도록 설정하여 코드 에디터와 유사한 환경을 제공함.
@@ -467,12 +467,16 @@ document.addEventListener('DOMContentLoaded', async () => {
              * 글자가 시작되는 정확한 지점에서 안내선이 겹치도록 좌측 패딩을 제거함.
              * 배경색이 글자 끝부분에서 너무 급격히 끊기지 않도록 우측에만 최소한의 여백을 유지함.
              */
+            /**
+             * 글자가 시작되는 정확한 지점에서 안내선이 겹치도록 좌측 패딩을 제거함.
+             * 우측 여백을 미미하게 설정하여 박스 내 공간 낭비를 방지함.
+             */
             link.style.paddingLeft = "0";
-            link.style.paddingRight = "4px";
+            link.style.paddingRight = "0.6px";
 
             /**
              * 제목 위계(h1~h6)에 따른 좌측 들여쓰기 차등 적용.
-             * margin-left를 사용하여 항목 자체를 밀어냄으로써 왼쪽의 안내선을 보존함.
+             * (level - 1) 계산을 통해 h1(1위계)은 marginLeft가 0이 되어 첫 번째 선에 위치함.
              */
             const level = parseInt(heading.tagName.substring(1));
             link.style.marginLeft = `${(level - 1) * 12}px`;
