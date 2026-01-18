@@ -152,6 +152,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 클릭 이벤트: 파일 목록 렌더링 및 L1 사이드바 활성화
             // 클릭 이벤트 등록
             menuBtn.addEventListener('click', async () => {
+                /**
+                 * 새로운 폴더를 선택할 경우, 이전 문서의 맥락을 유지하지 않도록 
+                 * 우측 사이드바의 목차(TOC) 내용을 즉시 초기화함.
+                 */
+                if (sidebarL2) sidebarL2.innerHTML = "";
+
                 const files = await fetchRepoContents(folder.path);   // 폴더의 전체 경로 사용
                 renderFileList(files);
                 if (!sidebarL1.classList.contains('active')) sidebarL1.classList.add('active');
