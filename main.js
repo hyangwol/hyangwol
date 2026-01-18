@@ -422,24 +422,25 @@ document.addEventListener('DOMContentLoaded', async () => {
          */
         tocContainer.style.padding = "10px 2px 10px 0";
         /**
-         * 목차의 계층 구조를 시각적으로 분별하기 위해 배경에 가느다란 수직 안내선을 배치함.
-         * repeating-linear-gradient를 사용하여 12px(들여쓰기 단위)마다 1px 두께의 선이 반복되도록 함.
-         * 이 방식은 단일 그라디언트보다 계층 간격의 시각적 일관성을 유지하는 데 유리함.
+         * 목차目次 위계位階에 따라 안내선案內線 굵기를 차등化(차등화)하여 시각적視覺的 계층階層 구조構造를 명확明確히 함.
+         * 다중多重 배경背景(multiple backgrounds)을 사용使用하여 각 위치位置에 필요한 굵기의 선線을 개별的(개별적)으로 배치配置함.
+         * 1~2번째 선線은 3px, 3~4번째 선線은 2px, 5~6번째 선線은 1px 두께로 설정設定함.
          */
         tocContainer.style.backgroundImage = `
-            repeating-linear-gradient(
-                to right,
-                #e3c0ff,
-                #e3c0ff 1px,
-                transparent 1px,
-                transparent 12px
-            )
+            linear-gradient(to right, #e3c0ff 3px, transparent 3px),
+            linear-gradient(to right, #e3c0ff 3px, transparent 3px),
+            linear-gradient(to right, #e3c0ff 2px, transparent 2px),
+            linear-gradient(to right, #e3c0ff 2px, transparent 2px),
+            linear-gradient(to right, #e3c0ff 1px, transparent 1px),
+            linear-gradient(to right, #e3c0ff 1px, transparent 1px)
         `;
         /**
-         * 안내선의 노출 범위를 왼쪽으로부터 최대 6개(72px)로 제한. 
-         * 배경의 전체 크기를 72px로 고정하고 반복을 해제함으로써 7번째 선부터는 노출되지 않도록 제어함.
+         * 각 안내선案內線이 12px 간격間隔으로 배치配置되도록 배경背景 시작 위치位置를 0px부터 60px까지 지정指定함.
+         * backgroundSize를 통해 각 선線이 점유占有하는 영역領域을 12px 단위單位로 분할分割하여 관리管理함.
+         * no-repeat를 적용適用하여 6개個의 지정指定된 안내선案內線 이외以後의 배경背景 노출露出을 원천的(원천적)으로 차단遮斷함.
          */
-        tocContainer.style.backgroundSize = "72px 100%";
+        tocContainer.style.backgroundPosition = "0px 0, 12px 0, 24px 0, 36px 0, 48px 0, 60px 0";
+        tocContainer.style.backgroundSize = "12px 100%, 12px 100%, 12px 100%, 12px 100%, 12px 100%, 12px 100%";
         tocContainer.style.backgroundRepeat = "no-repeat";
 
         headings.forEach((heading, index) => {
