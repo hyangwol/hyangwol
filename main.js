@@ -435,34 +435,49 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 식별자(id)가 확보되었으므로 목차 항목(link) 생성
             const link = document.createElement('a');
-                link.href = `#${id}`;
-                link.textContent = titleText;
-                link.style.display = "block";
-                link.style.textDecoration = "none";
-                link.style.color = "#555";
-                link.style.fontSize = "0.85em";
-                link.style.marginBottom = "6px";
-                link.style.lineHeight = "1.4";
-                /**
-                 * 안내선이 텍스트 아래에 겹쳐 가독성을 해치지 않도록 
-                 * 링크 항목 자체에 배경색을 부여하여 선을 가려주는 마스킹 효과를 적용함.
-                 */
-                link.style.backgroundColor = "#fff";
-                link.style.position = "relative";
+            link.href = `#${id}`;
+            link.textContent = titleText;
+            link.style.textDecoration = "none";
+            link.style.color = "#555";
+            link.style.fontSize = "0.85em";
+            link.style.marginBottom = "6px";
+            link.style.lineHeight = "1.4";
 
-                // 제목 위계(h1~h3)에 따른 좌측 들여쓰기 차등 적용
-                const level = parseInt(heading.tagName.substring(1));
-                link.style.paddingLeft = `${(level - 1) * 12}px`;
+            /**
+             * 안내선이 텍스트 아래에 겹쳐 가독성을 해치지 않도록 
+             * 링크 항목 자체에 배경색을 부여하여 선을 가려주는 마스킹 효과를 적용함.
+             * 들여쓰기 안내선이 글자 시작 지점 전(왼쪽)까지는 온전히 노출되도록 함.
+             * 배경색을 글자 너비만큼만 적용하기 위해 display를 inline-block으로 설정하고,
+             * 텍스트 영역에만 배경색을 부여하여 가이드라인을 마스킹(masking)함.
+             */
+            link.style.display = "inline-block";
+            link.style.backgroundColor = "#fff";
+            link.style.position = "relative";
+            link.style.paddingLeft = "4px";
+            link.style.paddingRight = "6px";
 
-                // 목차 항목 클릭 시 해당 위치로 부드럽게 이동하도록 설정
-                link.onclick = (e) => {
-                    e.preventDefault();
-                    heading.scrollIntoView({ behavior: 'smooth' });
-                };
+            /**
+             * 제목 위계(h1~h6)에 따른 좌측 들여쓰기 차등 적용.
+             * margin-left를 사용하여 항목 자체를 밀어냄으로써 왼쪽의 안내선을 보존함.
+             */
+            const level = parseInt(heading.tagName.substring(1));
+            link.style.marginLeft = `${(level - 1) * 12}px`;
 
-                tocContainer.appendChild(link);
-            }
-        );
+            // 목차 항목 클릭 시 해당 위치로 부드럽게 이동하도록 설정
+            link.onclick = (e) => {
+                e.preventDefault();
+                heading.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            /**
+             * inline-block 요소인 링크가 가로로 나열되는 것을 방지하고 
+             * 개별 항목이 독립된 행을 점유하도록 블록 레벨 컨테이너로 감싸 구성함.
+             */
+            const itemWrapper = document.createElement('div');
+            itemWrapper.appendChild(link);
+            tocContainer.appendChild(itemWrapper);
+        });
+
 
         sidebarL2.appendChild(tocContainer);
 
