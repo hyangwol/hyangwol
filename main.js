@@ -453,8 +453,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             link.style.display = "inline-block";
             link.style.backgroundColor = "#fff";
             link.style.position = "relative";
-            link.style.paddingLeft = "4px";
-            link.style.paddingRight = "6px";
+            /**
+             * 글자가 시작되는 정확한 지점에서 안내선이 겹치도록 좌측 패딩을 제거함.
+             * 배경색이 글자 끝부분에서 너무 급격히 끊기지 않도록 우측에만 최소한의 여백을 유지함.
+             */
+            link.style.paddingLeft = "0";
+            link.style.paddingRight = "4px";
 
             /**
              * 제목 위계(h1~h6)에 따른 좌측 들여쓰기 차등 적용.
