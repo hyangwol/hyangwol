@@ -428,11 +428,11 @@ document.addEventListener('DOMContentLoaded', async () => {
          */
         tocContainer.style.backgroundImage = `
             linear-gradient(to right, #e3c0ff 3px, transparent 3px),
-            linear-gradient(to right, #e3c0ff 3px, transparent 3px),
+            linear-gradient(to right, #c0ebff 3px, transparent 3px),
             linear-gradient(to right, #e3c0ff 2px, transparent 2px),
-            linear-gradient(to right, #e3c0ff 2px, transparent 2px),
+            linear-gradient(to right, #c0ebff 2px, transparent 2px),
             linear-gradient(to right, #e3c0ff 1px, transparent 1px),
-            linear-gradient(to right, #e3c0ff 1px, transparent 1px)
+            linear-gradient(to right, #c0ebff 1px, transparent 1px)
         `;
         /**
          * 각 안내선案內線이 12px 간격間隔으로 배치配置되도록 배경背景 시작 위치位置를 0px부터 60px까지 지정指定함.
