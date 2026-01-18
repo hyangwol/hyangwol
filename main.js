@@ -423,13 +423,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         tocContainer.style.padding = "10px 2px 10px 0";
         /**
          * 목차의 계층 구조를 시각적으로 분별하기 위해 배경에 가느다란 수직 안내선을 배치함.
-         * 12px(들여쓰기 단위) 간격으로 점선이 반복되도록 설정하여 코드 에디터와 유사한 환경을 제공함.
+         * repeating-linear-gradient를 사용하여 12px(들여쓰기 단위)마다 1px 두께의 선이 반복되도록 함.
+         * 이 방식은 단일 그라디언트보다 계층 간격의 시각적 일관성을 유지하는 데 유리함.
          */
-        tocContainer.style.backgroundImage = "linear-gradient(to right, #e3c0ff 1px, transparent 1px)";
+        tocContainer.style.backgroundImage = `
+            repeating-linear-gradient(
+                to right,
+                #e3c0ff,
+                #e3c0ff 1px,
+                transparent 1px,
+                transparent 12px
+            )
+        `;
         /**
-         * 안내선을 왼쪽에서부터 정확히 6개까지만 노출함.
-         * 각 안내선 간격이 12px이므로, 전체 배경 너비를 12px * 6 = 72px로 제한함.
-         * backgroundRepeat를 'no-repeat'로 설정하여 72px 이후에는 선이 나타나지 않게 함.
+         * 안내선의 노출 범위를 왼쪽으로부터 최대 6개(72px)로 제한. 
+         * 배경의 전체 크기를 72px로 고정하고 반복을 해제함으로써 7번째 선부터는 노출되지 않도록 제어함.
          */
         tocContainer.style.backgroundSize = "72px 100%";
         tocContainer.style.backgroundRepeat = "no-repeat";
