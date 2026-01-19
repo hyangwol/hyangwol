@@ -148,11 +148,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             menuBtn.style.backgroundColor = randomBtnColor;
 
             /**
-             * 마우스mouse 호버hover 시時 버튼button 내부內部 색상色彩을 미세微細하게 강화强化하여 상호상호(相互) 작용작용(作用) 피드백feedback을 명확明確히 함.
-             * 기존旣存 배경색背景色의 명도明度를 낮추는 필터filter를 적용適用하여 마우스mouse 움직임에 반응反應하는 직관적直觀的인 효과效果를 제공함.
+             * 마우스mouse 호버hover 시時 버튼button 내부內部 색상色彩을 미세微細하게 밝혀 상호상호(相互) 작용작용(作用) 피드백feedback을 명확明確히 함.
+             * 기존旣存 배경색背景色의 명도明度를 높이는 필터filter를 적용適用하여 버튼button이 은은하게 강조强調되는 시각적視覺的 효과效果를 제공提供함.
              */
             menuBtn.addEventListener('mouseenter', () => {
-                menuBtn.style.filter = "brightness(0.93)"; // 색상色彩을 약約 7% 어둡고 진하게 변경變更
+                menuBtn.style.filter = "brightness(1.11)"; // 색상色彩을 약約 11% 밝고 화사하게 변경變更
             });
             menuBtn.addEventListener('mouseleave', () => {
                 menuBtn.style.filter = "none";
