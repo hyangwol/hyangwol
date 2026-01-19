@@ -215,29 +215,54 @@ document.addEventListener('DOMContentLoaded', async () => {
         ul.style.padding = "15px";
 
         files.forEach(file => {
-            // GitHub 저장소의 폴더 내 파일 중 확장자가 .md인 파일만 선별하여 목록에 표시합니다.
+            // GitHub 저장소의 폴더 내 파일 중 확장자가 .md인 파일만 선별하여 목록에 표시함.
             if (file.name.endsWith('.md')) {
+                /**
+                 * 파일file 항목項目을 감싸는 리스트list 요소要素 생성生成.
+                 * <a> 태그를 별도로 생성하지 않고 <li> 자체를 블록형 클릭 영역으로 활용함.
+                 * 개별個別 항목項目이 사이드바sidebar의 좌우左右 경계境界에 밀착密着하는 직사각형直角形 클릭click 영역領域을 형성形成하도록 설정設定함.
+                 */
                 const li = document.createElement('li');
-                li.style.marginBottom = "8px";
 
-                const link = document.createElement('a');
-                link.href = '#'; // 기본 링크 이동을 방지하기 위해 '#'으로 설정합니다.
-                link.textContent = file.name.replace('.md', ''); // 사용자에게 보여줄 때 확장자는 제거합니다.
-                link.style.textDecoration = "none";
-                link.style.color = "#333";
-                link.style.fontSize = "0.9em";
-                link.style.cursor = "pointer";
+                // 사용자에게 보여줄 때 확장자는 제거합니다.
+                li.textContent = file.name.replace('.md', ''); 
 
+                /**
+                 * [직사각형 클릭 영역 및 레이아웃 최적화]
+                 * li 요소에 block 속성과 100% 너비를 부여하여 사이드바 좌우 경계에 밀착시킴. display: block 및 width: 100%를 통해 부모父母 너비에 꽉 차는 직사각형直角形 영역領域 확보確保.
+                 * 상하 padding을 통해 항목 간 경계를 맞닿게 하여 빈틈없는 클릭 인터페이스를 구축함.
+                 */
+                li.style.display = "block";
+                li.style.width = "100%";
+                li.style.padding = "10px 15px"; // 상하上下 10px, 좌우左右 15px로 조밀稠密하면서도 쾌적快適한 간격間隔 유지維持
+                li.style.boxSizing = "border-box"; // 패딩padding이 전체全体 너비에 포함包含되도록 설정設定
+                li.style.cursor = "pointer";
+                li.style.margin = "0"; // 항목間(항목간) 빈틈 없는 밀착密着을 위해 외부外部 여백餘白 제거除去
+                li.style.fontSize = "0.9em";
+                li.style.color = "#333";
+                li.style.transition = "background-color 0.2s ease"; // 시각적視覺的 변화變化를 부드럽게 연결連結
+
+                // 호버 시 배경색 변경으로 확장된 직사각형 영역을 시각적으로 강조
+                li.addEventListener('mouseenter', () => {
+                    li.style.backgroundColor = "#f0f4f8"; // 은은한 청색계열靑色系列로 활성화活性化 암시暗示
+                });
+                li.addEventListener('mouseleave', () => {
+                    li.style.backgroundColor = "transparent";
+                });
+
+                /**
+                 * 확장擴張된 리스트list 항목項目(li) 자체에 클릭click 이벤트event를 바인딩binding함.
+                 * 텍스트text뿐만 아니라 사이드바sidebar의 가로 전체全体 영역領域 어디를 눌러도 문서文書 로드load가 실행實行됨.
+                 */
                 /**
                  * 파일명을 클릭했을 때 기본 동작(페이지 이동)을 차단하고, 
                  * 해당 파일의 경로(path)를 인자로 전달하여 본문 내용을 비동기로 호출함.
+                 * (구조 변경으로 인해 li 요소에 직접 클릭 이벤트를 바인딩함)
                  */
-                link.onclick = (e) => {
-                    e.preventDefault();
+                li.addEventListener('click', () => {
                     loadPostContent(file.path);
-                };
+                });
 
-                li.appendChild(link);
                 ul.appendChild(li);
             }
         });
