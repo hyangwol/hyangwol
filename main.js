@@ -479,10 +479,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             link.textContent = titleText;
             link.style.textDecoration = "none";
             link.style.color = "#555";
-            link.style.fontSize = "0.85em";
+
             /**
-             * 코드 에디터와 유사한 조밀한 가독성을 위해 하단 여백을 제거하고 줄 높이를 최적화함.
-             * 배경색 마스킹이 상하로 미세하게 겹쳐 안내선이 끊김 없이 이어지도록 조정함.
+             * 제목題目 위계位階(level)에 따라 글자字 크기크기(fontSize)를 차등化(차등화)함.
+             * h1(1위계位階)은 0.9em에서 시작始作하여 하위下位 위계位階로 갈수록 0.03em씩 감소減少시켜
+             * 목차目次 내內의 시각적視覺的 위계位階 질서秩序를 직관적直觀的으로 표현表現함.
+             */
+            const level = parseInt(heading.tagName.substring(1));
+            const fontSize = 0.9 - ((level - 1) * 0.03);
+            link.style.fontSize = `${fontSize}em`;
+
+            /**
+             * 코드code 에디터editor와 유사類似한 조밀稠密한 가독성可讀性을 위해 하단下端 여백餘白을 제거除去하고 줄 높이(lineHeight)를 최적화最適化함.
+             * 배경색背景色 마스킹masking이 상하上下로 미세微細하게 겹쳐 안내선案內線이 끊김 없이 이어지도록 조정調整함.
              */
             link.style.marginBottom = "0";
             link.style.lineHeight = "1.2";
