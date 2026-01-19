@@ -481,13 +481,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             link.style.color = "#555";
 
             /**
+             * [위계별 스타일 차등화 로직]
+             * 문서의 계층 구조(h1~h6)를 시각적으로 명확히 전달하기 위해 
+             * 태그의 위계(level) 수치를 추출하여 글자 크기와 들여쓰기 너비를 동적으로 계산함.
+             */
+            const level = parseInt(heading.tagName.substring(1));
+
+            /**
              * 제목題目 위계位階(level)에 따라 글자字 크기크기(fontSize)를 차등化(차등화)함.
              * h1(1위계位階)은 0.9em에서 시작始作하여 하위下位 위계位階로 갈수록 0.03em씩 감소減少시켜
              * 목차目次 내內의 시각적視覺的 위계位階 질서秩序를 직관적直觀的으로 표현表現함.
              */
-            const level = parseInt(heading.tagName.substring(1));
             const fontSize = 0.9 - ((level - 1) * 0.03);
             link.style.fontSize = `${fontSize}em`;
+
+            /**
+             * 제목 위계(h1~h6)에 따른 좌측 들여쓰기 차등 적용.
+             * (level - 1) 계산을 통해 h1(1위계)은 marginLeft가 0이 되어 첫 번째 선에 위치함.
+             * 위계가 깊어질수록 지정된 간격(12px)만큼 우측으로 밀려나 계층 구조를 형성함.
+             */
+            link.style.marginLeft = `${(level - 1) * 12}px`;
 
             /**
              * 코드code 에디터editor와 유사類似한 조밀稠密한 가독성可讀性을 위해 하단下端 여백餘白을 제거除去하고 줄 높이(lineHeight)를 최적화最適化함.
@@ -506,23 +519,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             link.style.display = "inline-block";
             link.style.backgroundColor = "#fff";
             link.style.position = "relative";
+
             /**
              * 글자가 시작되는 정확한 지점에서 안내선이 겹치도록 좌측 패딩을 제거함.
              * 배경색이 글자 끝부분에서 너무 급격히 끊기지 않도록 우측에만 최소한의 여백을 유지함.
-             */
-            /**
-             * 글자가 시작되는 정확한 지점에서 안내선이 겹치도록 좌측 패딩을 제거함.
              * 우측 여백을 미미하게 설정하여 박스 내 공간 낭비를 방지함.
              */
             link.style.paddingLeft = "0";
             link.style.paddingRight = "0.6px";
-
-            /**
-             * 제목 위계(h1~h6)에 따른 좌측 들여쓰기 차등 적용.
-             * (level - 1) 계산을 통해 h1(1위계)은 marginLeft가 0이 되어 첫 번째 선에 위치함.
-             */
-            const level = parseInt(heading.tagName.substring(1));
-            link.style.marginLeft = `${(level - 1) * 12}px`;
 
             // 목차 항목 클릭 시 해당 위치로 부드럽게 이동하도록 설정
             link.onclick = (e) => {
