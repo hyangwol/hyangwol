@@ -234,7 +234,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                  */
                 li.style.display = "block";
                 li.style.width = "100%";
-                li.style.padding = "10px 15px"; // 상하上下 10px, 좌우左右 15px로 조밀稠密하면서도 쾌적快適한 간격間隔 유지維持
+                /**
+                 * [클릭 영역 높이 최적화]
+                 * 기존 10px의 75% 수준인 7.5px을 상하 패딩으로 적용하여 
+                 * 개별 항목의 세로 폭을 줄이고 목록의 시각적 밀도를 높임.
+                 */
+                li.style.padding = "7.5px 15px"; // 상하上下 7.5px, 좌우左右 15px로 조밀稠密하면서도 쾌적快適한 간격間隔 유지維持
                 li.style.boxSizing = "border-box"; // 패딩padding이 전체全体 너비에 포함包含되도록 설정設定
                 li.style.cursor = "pointer";
                 li.style.margin = "0"; // 항목間(항목간) 빈틈 없는 밀착密着을 위해 외부外部 여백餘白 제거除去
