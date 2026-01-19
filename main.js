@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
              * 기존旣存 배경색背景色의 명도明度를 높이는 필터filter를 적용適用하여 버튼button이 은은하게 강조强調되는 시각적視覺的 효과效果를 제공提供함.
              */
             menuBtn.addEventListener('mouseenter', () => {
-                menuBtn.style.filter = "brightness(1.11)"; // 색상色彩을 약約 11% 밝고 화사하게 변경變更
+                menuBtn.style.filter = "brightness(1.06)"; // 색상色彩을 약約 ~% 밝고 화사하게 변경變更.
             });
             menuBtn.addEventListener('mouseleave', () => {
                 menuBtn.style.filter = "none";
