@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         sidebarL1.innerHTML = ""; // 새로운 목록을 그리기 전 기존 내용을 초기화합니다.
         const ul = document.createElement('ul');
         ul.style.listStyle = "none";
-        ul.style.padding = "15px";
+        ul.style.padding = "0px";
 
         files.forEach(file => {
             // GitHub 저장소의 폴더 내 파일 중 확장자가 .md인 파일만 선별하여 목록에 표시함.
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                  */
                 li.style.display = "block";
                 li.style.width = "100%";
-                li.style.padding = "5px 1px"; // [클릭 영역 높이 조절] 상하上下, 좌우左右. (차례로.)
+                li.style.padding = "5px 15px"; // [클릭 영역 높이 조절] 상하上下, 좌우左右. (차례로.)
                 li.style.boxSizing = "border-box"; // 패딩padding이 전체全体 너비에 포함包含되도록 설정設定
                 li.style.cursor = "pointer";
                 li.style.margin = "0"; // 항목間(항목간) 빈틈 없는 밀착密着을 위해 외부外部 여백餘白 제거除去
