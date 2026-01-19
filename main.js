@@ -141,16 +141,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             menuBtn.textContent = folder.name;  // folder1, folder2 등이 버튼명이 됩니다.
 
             /**
-             * 각 메뉴 버튼이 생성될 때마다 기준 색상(#ebf2ff)의 채도 비율을 계승한
-             * 무작위 색상을 추출하여 버튼의 배경색(backgroundColor)으로 지정함.
-             * 이를 통해 메뉴 로드 시마다 다채롭고 조화로운 파스텔톤 시각 효과를 제공함.
+             * 각각各各의 메뉴menu 버튼button이 생성生成될 때마다 기준基準 색상色彩(#ebf2ff)의 채도彩度 비율比率을 계승繼承한
+             * 무작위無作爲 색상色彩을 추출抽出하여 버튼button의 배경색背景色(backgroundColor)으로 지정指定함.
              */
             const randomBtnColor = getRandomColorBySaturationRatio('#ebf2ff');
             menuBtn.style.backgroundColor = randomBtnColor;
 
-            // 버튼 클릭 시 해당 하위 폴더의 파일 목록을 호출합니다.
-            // 클릭 이벤트: 파일 목록 렌더링 및 L1 사이드바 활성화
-            // 클릭 이벤트 등록
+            /**
+             * 마우스mouse 호버hover 시時 버튼button 내부內部 색상色彩을 미세微細하게 강화强化하여 상호상호(相互) 작용작용(作用) 피드백feedback을 명확明確히 함.
+             * 기존旣存 배경색背景色의 명도明度를 낮추는 필터filter를 적용適用하여 마우스mouse 움직임에 반응反應하는 직관적直觀的인 효과效果를 제공함.
+             */
+            menuBtn.addEventListener('mouseenter', () => {
+                menuBtn.style.filter = "brightness(0.93)"; // 색상色彩을 약約 7% 어둡고 진하게 변경變更
+            });
+            menuBtn.addEventListener('mouseleave', () => {
+                menuBtn.style.filter = "none";
+            });
+
+            // 버튼button 클릭클릭(click) 시時 해당該當 하위下位 폴더folder의 파일file 목록目錄을 호출呼出함.
+            // 클릭클릭(click) 이벤트event: 파일file 목록目錄 렌더링rendering 및 L1 사이드바sidebar 활성화
+            // 클릭클릭(click) 이벤트event 등록登錄
             menuBtn.addEventListener('click', async () => {
                 /**
                  * 새로운 폴더를 선택할 경우, 이전 문서의 맥락을 유지하지 않도록 
