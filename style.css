@@ -232,9 +232,25 @@ body {
     background-color: #fafafa;
     border-right: 1px solid #eee;
     width: 0; /* 초기(初期) 상태(狀態)는 닫힘 */
-    overflow: hidden;
+    /* 수평(水平) 넘침은 숨기고, 수직(垂直)은 내용 내용(Content)이 많을 때만 스크롤 생성 */
+    overflow-x: hidden;
+    overflow-y: auto; 
     transition: width 0.017s ease; /* 부드러운 개폐(開閉) 효과(效果) */
     flex-shrink: 0; /* 너비(width)가 0으로 줄어드는 것을 보장(保障) */
+    display: flex;
+    flex-direction: column; /* 내부 요소들을 수직으로 배치 */
+}
+
+/* L1, L2 내부의 실제 리스트(ul 등)가 사이드바 높이를 가득 채우도록 설정 */
+#sidebar-left-1, #sidebar-left-2 {
+    height: 100%;
+}
+
+/* 사이드바 내부의 링크나 항목들이 가로로 줄바꿈되지 않고 한 줄을 유지하도록 강제(선택 사항) */
+.sidebar a, .sidebar li {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 글자가 너무 길면 ...으로 표시 */
 }
 
 /* 활성화(活性化) 시(時) 나타날 스타일(style) */
