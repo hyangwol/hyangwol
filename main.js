@@ -229,14 +229,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 /**
                  * [직사각형 클릭 영역 및 레이아웃 최적화]
-                 * li 요소에 block 속성과 100% 너비를 부여하여 사이드바 좌우 경계에 밀착시킴. display: block 및 width: 100%를 통해 부모父母 너비에 꽉 차는 직사각형直角形 영역領域 확보確保.
+                 * li 요소에 block 속성과 100% 너비를 부여하여 사이드바 좌우 경계에 밀착시킴. display: block 및 width: 100%를 통해 부모父母 너비에 꽉 차는 직사각형 영역領域 확보確保.
                  * 상하 padding을 통해 항목 간 경계를 맞닿게 하여 빈틈없는 클릭 인터페이스를 구축함.
                  */
-                li.style.display = "block";
+                /**
+                 * [다중행 말줄임 구조적 보완]
+                 * CSS의 웹킷 모델 설정을 덮어쓰지 않도록 인라인 스타일에서 직접 웹킷 속성을 주입함.
+                 */
+                li.style.display = "-webkit-box";
+                li.style.webkitLineClamp = "3";    // 최대 노출 행수(行數)를 3줄로 제한 
+                li.style.lineClamp = "3";
+                li.style.webkitBoxOrient = "vertical"; /* 박스 내부의 정렬 방향을 수직으로 설정 */
+                
                 li.style.width = "100%";
                 li.style.padding = "5px 15px"; // [클릭 영역 높이 조절] 상하上下, 좌우左右. (차례로.)
                 li.style.boxSizing = "border-box"; // 패딩padding이 전체全体 너비에 포함包含되도록 설정設定
                 li.style.cursor = "pointer";
+                li.style.overflow = "hidden";  // 3줄을 초과하는 내용은 숨김 
+                li.style.textOverflow = "ellipsis"; // 숨겨진 내용의 끝에 '...' 표시 
+                li.style.whiteSpace = "normal";
+                li.style.wordBreak = "break-all";  /* 단어 단위가 아닌 글자 단위로 끊어서 줄바꿈 유도 */
+                
                 li.style.margin = "0"; // 항목間(항목간) 빈틈 없는 밀착密着을 위해 외부外部 여백餘白 제거除去
                 li.style.fontSize = "0.9em";
                 li.style.color = "#333";
