@@ -454,11 +454,10 @@ document.addEventListener('DOMContentLoaded', async () => {
              * IntersectionObserver를 사용하여 제목의 가시성을 판단하고, 제목이 화면에서 사라질 경우 
              * 인접한 제목들 사이의 경계선을 강조하여 현재 위치를 암시함.
              */
-            const articleArea = document.getElementById('article');
             const tocItems = document.querySelectorAll('#sidebar-left-2 a');
-            const headings = Array.from(articleArea.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+            const syncHeadings = Array.from(articleArea.querySelectorAll('h1, h2, h3, h4, h5, h6'));
 
-            if (articleArea && headings.length > 0) {
+            if (articleArea && syncHeadings.length > 0) {
                 const observerOptions = {
                     root: articleArea,
                     rootMargin: '0px 0px -80% 0px',
@@ -498,15 +497,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const currentScroll = articleArea.scrollTop;
                         let lastPassedHeadingIndex = -1;
 
-                        headings.forEach((heading, index) => {
+                        syncHeadings.forEach((heading, index) => {
                             if (heading.offsetTop < currentScroll) {
                                 lastPassedHeadingIndex = index;
                             }
                         });
 
-                        if (lastPassedHeadingIndex !== -1 && lastPassedHeadingIndex < headings.length - 1) {
-                            const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${headings[lastPassedHeadingIndex].id}"]`);
-                            const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${headings[lastPassedHeadingIndex + 1].id}"]`);
+                        if (lastPassedHeadingIndex !== -1 && lastPassedHeadingIndex < syncHeadings.length - 1) {
+                            const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${syncHeadings[lastPassedHeadingIndex].id}"]`);
+                            const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${syncHeadings[lastPassedHeadingIndex + 1].id}"]`);
                             
                             // 상단 항목의 아랫변과 하단 항목의 윗변에 민트색 선을 그어 경계를 표시함
                             if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
@@ -516,7 +515,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, observerOptions);
 
                 // 각 제목 요소에 대해 가시성 감시 시작
-                headings.forEach(heading => observer.observe(heading));
+                syncHeadings.forEach(heading => observer.observe(heading));
             }
 
         } catch (error) {
