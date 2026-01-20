@@ -461,11 +461,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const observerOptions = {
                     root: articleArea,
                     /**
-                     * [전체 영역 감지 최적화]
-                     * 하단 마진을 0px로 설정하여 아티클 영역 100% 전체를 감시 범위로 확장함.
-                     * 브라우저 크기나 해상도에 관계없이 제목이 화면 내 어디에든 노출되면 즉시 강조됨.
+                     * [상단 경계 감지 최적화]
+                     * 상단 마진을 -1px로 설정하여 제목이 화면 상단 경계를 통과하는 즉시 감지 대상에서 제외함.
+                     * 이를 통해 상위 제목이 사라지면 하위 제목이 즉시 새로운 최상단 제목으로 강조됨.
                      */
-                    rootMargin: '0px 0px 0px 0px',
+                    rootMargin: '-1px 0px 0px 0px',
                     threshold: 0
                 };
 
