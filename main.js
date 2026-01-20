@@ -541,15 +541,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         /**
          * 목차目次 위계位階에 따라 안내선案內線 굵기를 차등化(차등화)하여 시각적視覺的 계층階層 구조構造를 명확明確히 함.
          * 다중多重 배경背景(multiple backgrounds)을 사용使用하여 각 위치位置에 필요한 굵기의 선線을 개별的(개별적)으로 배치配置함.
-         * 1~2번째 선線은 3px, 3~4번째 선線은 2px, 5~6번째 선線은 1px 두께로 설정設定함.
+         * 1~2번째 선線은 ~px, 3~4번째 선線은 ~px, 5~6번째 선線은 ~px 두께로 설정設定함.
          */
         tocContainer.style.backgroundImage = `
+            linear-gradient(to right, #e3c0ff 4px, transparent 4px),
+            linear-gradient(to right, #c0ebff 4px, transparent 4px),
             linear-gradient(to right, #e3c0ff 3px, transparent 3px),
             linear-gradient(to right, #c0ebff 3px, transparent 3px),
             linear-gradient(to right, #e3c0ff 2px, transparent 2px),
-            linear-gradient(to right, #c0ebff 2px, transparent 2px),
-            linear-gradient(to right, #e3c0ff 1px, transparent 1px),
-            linear-gradient(to right, #c0ebff 1px, transparent 1px)
+            linear-gradient(to right, #c0ebff 2px, transparent 2px)
         `;
         /**
          * 각 안내선案內線이 12px 간격間隔으로 배치配置되도록 배경背景 시작 위치位置를 0px부터 60px까지 지정指定함.
