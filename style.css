@@ -246,11 +246,17 @@ body {
     height: 100%;
 }
 
-/* 사이드바 내부의 링크나 항목들이 가로로 줄바꿈되지 않고 한 줄을 유지하도록 강제(선택 사항) */
+/* L1, L2 공통: 최대 3줄까지 허용 후 말줄임 처리 */
 .sidebar a, .sidebar li {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* 글자가 너무 길면 ...으로 표시 */
+    display: -webkit-box;       /* 플렉스 박스의 구형 모델을 사용하여 다중행 제어 */
+    -webkit-line-clamp: 3;      /* 최대 노출 행수(行數)를 3줄로 제한 */
+    line-clamp: 3;              /* 표준(Standard) 속성 추가: 에디터 경고 해결 */
+    -webkit-box-orient: vertical; /* 박스 내부의 정렬 방향을 수직으로 설정 */
+    box-orient: vertical;       /* 표준 대응 속성 추가 */
+    overflow: hidden;           /* 3줄을 초과하는 내용은 숨김 */
+    text-overflow: ellipsis;    /* 숨겨진 내용의 끝에 '...' 표시 */
+    white-space: normal;        /* 기존의 nowrap을 해제하여 줄바꿈 허용 */
+    word-break: break-all;      /* 단어 단위가 아닌 글자 단위로 끊어서 줄바꿈 유도 */
 }
 
 /* 활성화(活性化) 시(時) 나타날 스타일(style) */
