@@ -248,15 +248,20 @@ body {
 
 /* L1, L2 공통: 최대 3줄까지 허용 후 말줄임 처리 */
 .sidebar a, .sidebar li {
-    display: -webkit-box;       /* 플렉스 박스의 구형 모델을 사용하여 다중행 제어 */
-    -webkit-line-clamp: 3;      /* 최대 노출 행수(行數)를 3줄로 제한 */
-    line-clamp: 3;              /* 표준(Standard) 속성 추가: 에디터 경고 해결 */
-    -webkit-box-orient: vertical; /* 박스 내부의 정렬 방향을 수직으로 설정 */
-    box-orient: vertical;       /* 표준 대응 속성 추가 */
-    overflow: hidden;           /* 3줄을 초과하는 내용은 숨김 */
-    text-overflow: ellipsis;    /* 숨겨진 내용의 끝에 '...' 표시 */
-    white-space: normal;        /* 기존의 nowrap을 해제하여 줄바꿈 허용 */
-    word-break: break-all;      /* 단어 단위가 아닌 글자 단위로 끊어서 줄바꿈 유도 */
+    display: -webkit-box;       /* 웹킷 박스 모델 명시: 다중행 제어의 핵심 */
+    -webkit-line-clamp: 3;      /* 최대 노출 행수를 3줄로 엄격히 제한 */
+    line-clamp: 3;              /* 표준 규격 준수: 에디터 경고 해결 */
+    -webkit-box-orient: vertical; /* 텍스트 적재 방향을 수직으로 설정 */
+    box-orient: vertical;       /* 표준 규격 대응 */
+    
+    overflow: hidden;           /* 영역을 벗어나는 텍스트를 숨김 */
+    text-overflow: ellipsis;    /* 차단 지점에 '...' 기호 자동 삽입 */
+    white-space: normal;        /* 한 줄 고정을 해제하여 자연스러운 줄바꿈 유도 */
+    word-break: break-all;       /* 단어 단위가 아닌 글자 단위로 끊어서 줄바꿈 유도. 영문·숫자 포함 모든 문자를 경계선에서 줄바꿈 */
+    
+    /* 구조적 보정: 인라인 요소를 블록화하여 웹킷 박스 모델의 완전한 작동 보장 */
+    width: 100%;                /* 부모 너비를 기준으로 줄바꿈 시점 확정 */
+    box-sizing: border-box;     /* 패딩과 테두리를 너비 계산에 포함하여 오차 제거 */
 }
 
 /* 활성화(活性化) 시(時) 나타날 스타일(style) */
