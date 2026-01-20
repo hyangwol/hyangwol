@@ -454,68 +454,70 @@ document.addEventListener('DOMContentLoaded', async () => {
              * IntersectionObserver를 사용하여 제목의 가시성을 판단하고, 제목이 화면에서 사라질 경우 
              * 인접한 제목들 사이의 경계선을 강조하여 현재 위치를 암시함.
              */
-            const tocItems = document.querySelectorAll('#sidebar-left-2 a');
             const articleArea = document.getElementById('article');
+            const tocItems = document.querySelectorAll('#sidebar-left-2 a');
             const headings = Array.from(articleArea.querySelectorAll('h1, h2, h3, h4, h5, h6'));
 
-            const observerOptions = {
-                root: articleArea,
-                rootMargin: '0px 0px -80% 0px',
-                threshold: 0
-            };
+            if (articleArea && headings.length > 0) {
+                const observerOptions = {
+                    root: articleArea,
+                    rootMargin: '0px 0px -80% 0px',
+                    threshold: 0
+                };
 
-            const observer = new IntersectionObserver((entries) => {
-                // 현재 화면에 노출된 제목들만 필터링
-                let visibleHeadings = entries
-                    .filter(entry => entry.isIntersecting)
-                    .map(entry => entry.target);
+                const observer = new IntersectionObserver((entries) => {
+                    // 현재 화면에 노출된 제목들만 필터링
+                    let visibleHeadings = entries
+                        .filter(entry => entry.isIntersecting)
+                        .map(entry => entry.target);
 
-                // 모든 TOC 항목의 강조 상태 초기화 (배경색 및 인셋 섀도우 제거)
-                tocItems.forEach(item => {
-                    item.style.backgroundColor = "white";
-                    item.style.boxShadow = "none";
-                });
-
-                if (visibleHeadings.length > 0) {
-                    /**
-                     * 화면에 제목이 존재하는 경우:
-                     * 노출된 제목 중 가장 상단에 위치한 요소를 찾아 TOC에서 해당 글자 박스의 내부 배경색을 민트색으로 변경함.
-                     */
-                    const topHeading = visibleHeadings.reduce((prev, curr) => 
-                        prev.offsetTop < curr.offsetTop ? prev : curr
-                    );
-                    const targetTocItem = document.querySelector(`#sidebar-left-2 a[href="#${topHeading.id}"]`);
-                    if (targetTocItem) {
-                        targetTocItem.style.backgroundColor = "#4fd1c5";
-                    }
-                } else {
-                    /**
-                     * 화면에 제목이 하나도 보이지 않는 경우:
-                     * 현재 스크롤 위치를 기준으로 '이미 지나간 제목'과 '앞으로 나타날 제목' 사이의 경계선을 강조함.
-                     * 글자 박스의 크기에 영향을 주지 않도록 상단/하단 안쪽 테두리(inset shadow)를 사용함.
-                     */
-                    const currentScroll = articleArea.scrollTop;
-                    let lastPassedHeadingIndex = -1;
-
-                    headings.forEach((heading, index) => {
-                        if (heading.offsetTop < currentScroll) {
-                            lastPassedHeadingIndex = index;
-                        }
+                    // 모든 TOC 항목의 강조 상태 초기화 (배경색 및 인셋 섀도우 제거)
+                    tocItems.forEach(item => {
+                        item.style.backgroundColor = "white";
+                        item.style.boxShadow = "none";
                     });
 
-                    if (lastPassedHeadingIndex !== -1 && lastPassedHeadingIndex < headings.length - 1) {
-                        const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${headings[lastPassedHeadingIndex].id}"]`);
-                        const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${headings[lastPassedHeadingIndex + 1].id}"]`);
-                        
-                        // 상단 항목의 아랫변과 하단 항목의 윗변에 민트색 선을 그어 경계를 표시함
-                        if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
-                        if (lowerItem) lowerItem.style.boxShadow = "inset 0 2px 0 0 #4fd1c5";
-                    }
-                }
-            }, observerOptions);
+                    if (visibleHeadings.length > 0) {
+                        /**
+                         * 화면에 제목이 존재하는 경우:
+                         * 노출된 제목 중 가장 상단에 위치한 요소를 찾아 TOC에서 해당 글자 박스의 내부 배경색을 민트색으로 변경함.
+                         */
+                        const topHeading = visibleHeadings.reduce((prev, curr) => 
+                            prev.offsetTop < curr.offsetTop ? prev : curr
+                        );
+                        const targetTocItem = document.querySelector(`#sidebar-left-2 a[href="#${topHeading.id}"]`);
+                        if (targetTocItem) {
+                            targetTocItem.style.backgroundColor = "#4fd1c5";
+                        }
+                    } else {
+                        /**
+                         * 화면에 제목이 하나도 보이지 않는 경우:
+                         * 현재 스크롤 위치를 기준으로 '이미 지나간 제목'과 '앞으로 나타날 제목' 사이의 경계선을 강조함.
+                         * 글자 박스의 크기에 영향을 주지 않도록 상단/하단 안쪽 테두리(inset shadow)를 사용함.
+                         */
+                        const currentScroll = articleArea.scrollTop;
+                        let lastPassedHeadingIndex = -1;
 
-            // 각 제목 요소에 대해 가시성 감시 시작
-            headings.forEach(heading => observer.observe(heading));
+                        headings.forEach((heading, index) => {
+                            if (heading.offsetTop < currentScroll) {
+                                lastPassedHeadingIndex = index;
+                            }
+                        });
+
+                        if (lastPassedHeadingIndex !== -1 && lastPassedHeadingIndex < headings.length - 1) {
+                            const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${headings[lastPassedHeadingIndex].id}"]`);
+                            const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${headings[lastPassedHeadingIndex + 1].id}"]`);
+                            
+                            // 상단 항목의 아랫변과 하단 항목의 윗변에 민트색 선을 그어 경계를 표시함
+                            if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
+                            if (lowerItem) lowerItem.style.boxShadow = "inset 0 2px 0 0 #4fd1c5";
+                        }
+                    }
+                }, observerOptions);
+
+                // 각 제목 요소에 대해 가시성 감시 시작
+                headings.forEach(heading => observer.observe(heading));
+            }
 
         } catch (error) {
             console.error("콘텐츠content 로드load 실패失敗:", error);
