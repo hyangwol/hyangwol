@@ -270,8 +270,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         item.style.boxShadow = "none";
                     });
 
-                    // 직사각형의 크기 변화 없이 안쪽 벽으로 2px 두께의 민트색(#4fd1c5) 선을 두름.
-                    li.style.boxShadow = "inset 0 0 0 2px #4fd1c5";
+                    // 직사각형의 크기 변화 없이 안쪽 벽으로 ~px 두께의 ~색(#~) 선을 두름.
+                    li.style.boxShadow = "inset 0 0 0 5px #b6fff8";
 
                     loadPostContent(file.path);
                 });
