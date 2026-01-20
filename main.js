@@ -463,6 +463,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                  * 가시 영역 내 모든 제목의 면을 강조하고, 상하단 임계 구역(9%, 11%) 공백 시 경계선을 추가함.
                  */
                 const updateTOC = () => {
+                    // 최적화: 사이드바가 닫혀 있거나 TOC 항목이 없으면 계산 중단
+                    if (sidebarL2.classList.contains('collapsed') || tocItems.length === 0) return;
+
                     const rootRect = articleArea.getBoundingClientRect();
                     // 임계 구역 계산 (상단 9%, 하단 11%)
                     const topThreshold = rootRect.top + (rootRect.height * 0.09);
