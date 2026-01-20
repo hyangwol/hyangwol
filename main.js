@@ -254,12 +254,25 @@ document.addEventListener('DOMContentLoaded', async () => {
                  * 확장擴張된 리스트list 항목項目(li) 자체에 클릭click 이벤트event를 바인딩binding함.
                  * 텍스트text뿐만 아니라 사이드바sidebar의 가로 전체全体 영역領域 어디를 눌러도 문서文書 로드load가 실행實行됨.
                  */
-                /**
+                                /**
                  * 파일명을 클릭했을 때 기본 동작(페이지 이동)을 차단하고, 
                  * 해당 파일의 경로(path)를 인자로 전달하여 본문 내용을 비동기로 호출함.
                  * (구조 변경으로 인해 li 요소에 직접 클릭 이벤트를 바인딩함)
                  */
                 li.addEventListener('click', () => {
+                    /**
+                     * [선택 상태 시각화 로직]
+                     * 새로운 항목이 클릭될 때마다 목록 내의 모든 li 요소에서 민트색 테두리를 제거함.
+                     * 이후 현재 클릭된(li) 요소에만 안쪽 테두리(inset shadow)를 부여하여 선택 상태를 표시함.
+                     */
+                    const allItems = ul.querySelectorAll('li');
+                    allItems.forEach(item => {
+                        item.style.boxShadow = "none";
+                    });
+
+                    // 직사각형의 크기 변화 없이 안쪽 벽으로 2px 두께의 민트색(#4fd1c5) 선을 두름.
+                    li.style.boxShadow = "inset 0 0 0 2px #4fd1c5";
+
                     loadPostContent(file.path);
                 });
 
