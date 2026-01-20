@@ -627,6 +627,21 @@ document.addEventListener('DOMContentLoaded', async () => {
              */
             const level = parseInt(heading.tagName.substring(1));
 
+            // [L2 다중행 말줄임 및 레이아웃 최적화]
+            // L1과 동일하게 최대 3줄까지만 노출하고 넘치는 텍스트는 '...' 처리함
+            link.style.display = "-webkit-box";
+            link.style.webkitLineClamp = "3";
+            link.style.lineClamp = "3";
+            link.style.webkitBoxOrient = "vertical";
+            link.style.overflow = "hidden";
+            link.style.textOverflow = "ellipsis";
+            link.style.whiteSpace = "normal";
+            link.style.wordBreak = "break-all";
+
+            // 너비와 박스 모델 설정: 사이드바 내부에서 적절한 클릭 영역 확보
+            link.style.width = "calc(100% - " + ((level - 1) * 12) + "px)";
+            link.style.boxSizing = "border-box";
+
             /**
              * 제목題目 위계位階(level)에 따라 글자字 크기크기(fontSize)를 차등化(차등화)함.
              * h1(1위계位階)은 0.9em에서 시작始作하여 하위下位 위계位階로 갈수록 0.03em씩 감소減少시켜
@@ -656,8 +671,10 @@ document.addEventListener('DOMContentLoaded', async () => {
              * 배경색을 글자 너비만큼만 적용하기 위해 display를 inline-block으로 설정하고,
              * 텍스트 영역에만 배경색을 부여하여 가이드라인을 마스킹(masking)함.
              */
-            link.style.display = "inline-block";
+            // 말줄임 기능을 위해 display를 -webkit-box로 변경 (inline-block 제거)
+            link.style.display = "-webkit-box";
             link.style.backgroundColor = "#fff";
+            // 안내선 마스킹을 위해 z-index 영향력을 갖는 relative 유지
             link.style.position = "relative";
 
             /**
