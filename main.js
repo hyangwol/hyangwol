@@ -479,23 +479,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
 
                     if (visibleHeadings.length > 0) {
-                        // 화면에 제목이 하나라도 있으면, 그 중 가장 위에 있는 제목의 '면'을 강조
+                        // 1. 화면에 제목이 존재할 때: 최상위(첫 번째) 제목의 면을 강조
                         const topHeading = visibleHeadings[0];
                         const targetTocItem = document.querySelector(`#sidebar-left-2 a[href="#${topHeading.id}"]`);
                         if (targetTocItem) targetTocItem.style.backgroundColor = "#4fd1c5";
                     } else {
-                        // 2. 화면에 제목이 하나도 없을 때만 '경계선' 강조 로직 실행
+                        // 2. 화면에 제목이 없을 때: 경계선 강조
                         const lastPassedHeading = [...syncHeadings].reverse().find(heading => {
                             return heading.getBoundingClientRect().bottom <= rootRect.top + 1;
                         });
 
                         if (lastPassedHeading) {
                             const index = syncHeadings.indexOf(lastPassedHeading);
+                            const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${lastPassedHeading.id}"]`);
+
                             if (index < syncHeadings.length - 1) {
-                                const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${lastPassedHeading.id}"]`);
+                                // 다음 제목이 존재하는 경우 (두 제목 사이의 경계 강조)
                                 const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${syncHeadings[index + 1].id}"]`);
                                 if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
                                 if (lowerItem) lowerItem.style.boxShadow = "inset 0 2px 0 0 #4fd1c5";
+                            } else {
+                                // 마지막 제목을 완전히 통과한 경우 (마지막 항목의 밑변만 강조)
+                                if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
                             }
                         }
                     }
