@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 li.style.margin = "0"; // 항목間(항목간) 빈틈 없는 밀착密着을 위해 외부外部 여백餘白 제거除去
                 li.style.fontSize = "0.9em";
                 li.style.color = "#333";
-                li.style.transition = "background-color 0.03s ease"; // 시각적視覺的 변화變化를 부드럽게 연결連結.
+                li.style.transition = "background-color 0.00s ease"; // 시각적視覺的 변화變化를 부드럽게 연결連結.
 
                 // 호버 시 배경색 변경으로 확장된 직사각형 영역을 시각적으로 강조
                 li.addEventListener('mouseenter', () => {
