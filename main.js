@@ -460,47 +460,69 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (articleArea && syncHeadings.length > 0) {
                 /**
                  * [TOC 실시간 정밀 동기화 함수]
-                 * 제목의 가시성 여부에 따라 면 강조와 경계선 강조를 즉각적으로 교체함.
+                 * 가시 영역 내 모든 제목의 면을 강조하고, 상하단 임계 구역(9%, 11%) 공백 시 경계선을 추가함.
                  */
                 const updateTOC = () => {
                     const rootRect = articleArea.getBoundingClientRect();
-                    const boundary = rootRect.top + 1;
+                    // 임계 구역 계산 (상단 9%, 하단 11%)
+                    const topThreshold = rootRect.top + (rootRect.height * 0.09);
+                    const bottomThreshold = rootRect.bottom - (rootRect.height * 0.11);
 
-                    // 모든 강조 상태 초기화
+                    // 1. 모든 강조 상태 초기화
                     tocItems.forEach(item => {
                         item.style.backgroundColor = "white";
                         item.style.boxShadow = "none";
                     });
 
-                    // 1. 현재 화면(가시 영역)에 '일부라도 보이는' 제목들 찾기
+                    // 2. 가시 영역(1순위 ~ 말순위) 제목 탐색
                     const visibleHeadings = syncHeadings.filter(heading => {
                         const rect = heading.getBoundingClientRect();
-                        return rect.bottom > rootRect.top + 1 && rect.top < rootRect.bottom - 1;
+                        return rect.bottom > rootRect.top && rect.top < rootRect.bottom;
                     });
 
                     if (visibleHeadings.length > 0) {
-                        // 1. 화면에 제목이 존재할 때: 최상위(첫 번째) 제목의 면을 강조
-                        const topHeading = visibleHeadings[0];
-                        const targetTocItem = document.querySelector(`#sidebar-left-2 a[href="#${topHeading.id}"]`);
-                        if (targetTocItem) targetTocItem.style.backgroundColor = "#4fd1c5";
-                    } else {
-                        // 2. 화면에 제목이 없을 때: 경계선 강조
-                        const lastPassedHeading = [...syncHeadings].reverse().find(heading => {
-                            return heading.getBoundingClientRect().bottom <= rootRect.top + 1;
+                        // [면 강조] 화면에 보이는 모든 제목의 배경색 채우기
+                        visibleHeadings.forEach(heading => {
+                            const target = document.querySelector(`#sidebar-left-2 a[href="#${heading.id}"]`);
+                            if (target) target.style.backgroundColor = "#4fd1c5";
                         });
 
-                        if (lastPassedHeading) {
-                            const index = syncHeadings.indexOf(lastPassedHeading);
-                            const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${lastPassedHeading.id}"]`);
+                        const firstVisible = visibleHeadings[0];
+                        const lastVisible = visibleHeadings[visibleHeadings.length - 1];
 
+                        // [상단 경계선] 상단 9% 영역 내에 제목이 없을 때: 1순위와 이전 제목 사이 강조
+                        if (firstVisible.getBoundingClientRect().top > topThreshold) {
+                            const index = syncHeadings.indexOf(firstVisible);
+                            if (index > 0) {
+                                const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${syncHeadings[index - 1].id}"]`);
+                                const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${firstVisible.id}"]`);
+                                if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
+                                if (lowerItem) lowerItem.style.boxShadow = "inset 0 2px 0 0 #4fd1c5";
+                            }
+                        }
+
+                        // [하단 경계선] 하단 11% 영역 내에 제목이 없을 때: 말순위와 다음 제목 사이 강조
+                        if (lastVisible.getBoundingClientRect().bottom < bottomThreshold) {
+                            const index = syncHeadings.indexOf(lastVisible);
                             if (index < syncHeadings.length - 1) {
-                                // 다음 제목이 존재하는 경우 (두 제목 사이의 경계 강조)
+                                const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${lastVisible.id}"]`);
                                 const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${syncHeadings[index + 1].id}"]`);
                                 if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
                                 if (lowerItem) lowerItem.style.boxShadow = "inset 0 2px 0 0 #4fd1c5";
-                            } else {
-                                // 마지막 제목을 완전히 통과한 경우 (마지막 항목의 밑변만 강조)
+                            }
+                        }
+                    } else {
+                        // 3. 가시 영역에 제목이 하나도 없을 때
+                        const lastPassed = [...syncHeadings].reverse().find(h => h.getBoundingClientRect().bottom <= rootRect.top);
+                        if (lastPassed) {
+                            const index = syncHeadings.indexOf(lastPassed);
+                            const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${lastPassed.id}"]`);
+                            if (index < syncHeadings.length - 1) {
+                                const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${syncHeadings[index + 1].id}"]`);
                                 if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
+                                if (lowerItem) lowerItem.style.boxShadow = "inset 0 2px 0 0 #4fd1c5";
+                            } else if (upperItem) {
+                                upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
                             }
                         }
                     }
