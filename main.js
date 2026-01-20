@@ -458,69 +458,53 @@ document.addEventListener('DOMContentLoaded', async () => {
             const syncHeadings = Array.from(articleArea.querySelectorAll('h1, h2, h3, h4, h5, h6'));
 
             if (articleArea && syncHeadings.length > 0) {
-                const observerOptions = {
-                    root: articleArea,
-                    /**
-                     * [상단 경계 감지 최적화]
-                     * 상단 마진을 -1px로 설정하여 제목이 화면 상단 경계를 통과하는 즉시 감지 대상에서 제외함.
-                     * 이를 통해 상위 제목이 사라지면 하위 제목이 즉시 새로운 최상단 제목으로 강조됨.
-                     */
-                    rootMargin: '-1px 0px 0px 0px',
-                    threshold: 0
-                };
+                /**
+                 * [TOC 실시간 정밀 동기화 함수]
+                 * 제목의 가시성 여부에 따라 면 강조와 경계선 강조를 즉각적으로 교체함.
+                 */
+                const updateTOC = () => {
+                    const rootRect = articleArea.getBoundingClientRect();
+                    const boundary = rootRect.top + 1;
 
-                const observer = new IntersectionObserver((entries) => {
-                    // 현재 화면에 노출된 제목들만 필터링
-                    let visibleHeadings = entries
-                        .filter(entry => entry.isIntersecting)
-                        .map(entry => entry.target);
-
-                    // 모든 TOC 항목의 강조 상태 초기화 (배경색 및 인셋 섀도우 제거)
+                    // 모든 강조 상태 초기화
                     tocItems.forEach(item => {
                         item.style.backgroundColor = "white";
                         item.style.boxShadow = "none";
                     });
 
-                    if (visibleHeadings.length > 0) {
-                        /**
-                         * 화면에 제목이 존재하는 경우:
-                         * 노출된 제목 중 가장 상단에 위치한 요소를 찾아 TOC에서 해당 글자 박스의 내부 배경색을 민트색으로 변경함.
-                         */
-                        const topHeading = visibleHeadings.reduce((prev, curr) => 
-                            prev.offsetTop < curr.offsetTop ? prev : curr
-                        );
-                        const targetTocItem = document.querySelector(`#sidebar-left-2 a[href="#${topHeading.id}"]`);
-                        if (targetTocItem) {
-                            targetTocItem.style.backgroundColor = "#4fd1c5";
-                        }
-                    } else {
-                        /**
-                         * 화면에 제목이 하나도 보이지 않는 경우:
-                         * 현재 스크롤 위치를 기준으로 '이미 지나간 제목'과 '앞으로 나타날 제목' 사이의 경계선을 강조함.
-                         * 글자 박스의 크기에 영향을 주지 않도록 상단/하단 안쪽 테두리(inset shadow)를 사용함.
-                         */
-                        const currentScroll = articleArea.scrollTop;
-                        let lastPassedHeadingIndex = -1;
+                    // 1. 현재 화면(가시 영역)에 '일부라도 보이는' 제목들 찾기
+                    const visibleHeadings = syncHeadings.filter(heading => {
+                        const rect = heading.getBoundingClientRect();
+                        return rect.bottom > rootRect.top + 1 && rect.top < rootRect.bottom - 1;
+                    });
 
-                        syncHeadings.forEach((heading, index) => {
-                            if (heading.offsetTop < currentScroll) {
-                                lastPassedHeadingIndex = index;
-                            }
+                    if (visibleHeadings.length > 0) {
+                        // 화면에 제목이 하나라도 있으면, 그 중 가장 위에 있는 제목의 '면'을 강조
+                        const topHeading = visibleHeadings[0];
+                        const targetTocItem = document.querySelector(`#sidebar-left-2 a[href="#${topHeading.id}"]`);
+                        if (targetTocItem) targetTocItem.style.backgroundColor = "#4fd1c5";
+                    } else {
+                        // 2. 화면에 제목이 하나도 없을 때만 '경계선' 강조 로직 실행
+                        const lastPassedHeading = [...syncHeadings].reverse().find(heading => {
+                            return heading.getBoundingClientRect().bottom <= rootRect.top + 1;
                         });
 
-                        if (lastPassedHeadingIndex !== -1 && lastPassedHeadingIndex < syncHeadings.length - 1) {
-                            const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${syncHeadings[lastPassedHeadingIndex].id}"]`);
-                            const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${syncHeadings[lastPassedHeadingIndex + 1].id}"]`);
-                            
-                            // 상단 항목의 아랫변과 하단 항목의 윗변에 민트색 선을 그어 경계를 표시함
-                            if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
-                            if (lowerItem) lowerItem.style.boxShadow = "inset 0 2px 0 0 #4fd1c5";
+                        if (lastPassedHeading) {
+                            const index = syncHeadings.indexOf(lastPassedHeading);
+                            if (index < syncHeadings.length - 1) {
+                                const upperItem = document.querySelector(`#sidebar-left-2 a[href="#${lastPassedHeading.id}"]`);
+                                const lowerItem = document.querySelector(`#sidebar-left-2 a[href="#${syncHeadings[index + 1].id}"]`);
+                                if (upperItem) upperItem.style.boxShadow = "inset 0 -2px 0 0 #4fd1c5";
+                                if (lowerItem) lowerItem.style.boxShadow = "inset 0 2px 0 0 #4fd1c5";
+                            }
                         }
                     }
-                }, observerOptions);
+                };
 
-                // 각 제목 요소에 대해 가시성 감시 시작
-                syncHeadings.forEach(heading => observer.observe(heading));
+                // 스크롤 이벤트에 즉시 반응하도록 바인딩
+                articleArea.addEventListener('scroll', updateTOC);
+                // 초기 실행으로 현재 위치 반영
+                updateTOC();
             }
 
         } catch (error) {
